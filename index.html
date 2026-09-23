@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Younes Ghalloum Portfolio</title>
+    <link rel="icon" type="image/x-icon" href="logo.png">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script>
+        (function () {
+            var saved = null;
+            try { saved = localStorage.getItem("theme"); } catch (e) {}
+            var theme = saved || (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+            document.documentElement.setAttribute("data-theme", theme);
+        })();
+    </script>
+</head>
+<body>
+    <nav>
+        <div>
+            <img src="logo.png" alt="Younes Ghalloum Logo" class="logo">
+        </div>
+        <div class="nav-right">
+            <ul>
+                <!-- <li><a id="nav-home" href="index.html">Home</a></li>
+                <li><a id="nav-about" href="about.html">About</a></li> -->
+                <li><a id="nav-contact" href="#contact">Contact me</a></li>
+            </ul>
+            <div class="lang-switch">
+                <button id="lang-en" class="lang-option active" onclick="setLanguage('en')">EN</button>
+                <span class="lang-switch-divider">/</span>
+                <button id="lang-fr" class="lang-option" onclick="setLanguage('fr')">FR</button>
+            </div>
+            <button id="theme-toggle" class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode">
+                <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                    <circle cx="12" cy="12" r="4"/>
+                    <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>
+                </svg>
+                <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/>
+                </svg>
+            </button>
+        </div>
+    </nav>
+    <div class="hero">
+        <h1><span id="hero-title">Hi, I'm</span> <span class="name">Younes Ghalloum</span></h1>
+        <p>a  <span class="typing">Full-Stack Developer</span> <span id="hero-subtitle"> building backends with Laravel and NestJS, interfaces with React and React Native, and the infrastructure in between.</span></p>
+        <img src="pi.jpeg" alt="Younes Ghalloum">
+    </div>
+    <div class="about reveal">
+        <h2 id="about-title">About Me</h2>
+        <p id="about-text">I work across the stack — Laravel and NestJS lately, Django and FastAPI before that — with React, React Native, and Angular on the front end. I build whatever a project actually needs rather than sticking to one niche: during an internship I built LeakSight, a platform for aggregating threat-intelligence IoCs, and I've shipped everything from bug trackers to backend APIs since. Outside of client work, I build and ship personal projects to keep learning.</p>
+
+    </div>
+    
+    <div class="skills reveal">
+        <h2 id="skills-title">My skills</h2>
+        <p id="skills-text">Here are some of the skills I possess:</p>
+        <div class="skills-list">
+            <div class="skill-row">
+                <div class="skill-label">
+                    <svg class="skill-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor">
+                        <rect x="4" y="12" width="56" height="40" rx="2" ry="2" stroke="currentColor" stroke-width="2" fill="none"/>
+                        <line x1="4" y1="20" x2="60" y2="20" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                    <span>Frontend Development</span>
+                </div>
+                <ul class="skill-items">
+                    <li>React.js</li>
+                    <li>React Native</li>
+                    <li>Tailwind CSS</li>
+                    <li>Angular.js</li>
+                    <li>TypeScript</li>
+                    <li>JavaScript (ES6+)</li>
+                    <li>HTML5</li>
+                    <li>CSS3</li>
+                    <li>Redux</li>
+                    <li>Bootstrap</li>
+                </ul>
+            </div>
+            <div class="skill-row">
+                <div class="skill-label">
+                    <svg class="skill-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor">
+                        <rect x="8" y="8" width="48" height="16" rx="2" ry="2" stroke="currentColor" stroke-width="2" fill="none"/>
+                        <rect x="8" y="28" width="48" height="16" rx="2" ry="2" stroke="currentColor" stroke-width="2" fill="none"/>
+                        <rect x="8" y="48" width="48" height="8" rx="2" ry="2" stroke="currentColor" stroke-width="2" fill="none"/>
+                    </svg>
+                    <span>Backend Development</span>
+                </div>
+                <ul class="skill-items">
+                    <li>Laravel</li>
+                    <li>NestJS</li>
+                    <li>Spring Boot</li>
+                    <li>Django</li>
+                    <li>FastAPI</li>
+                    <li>Node.js</li>
+                    <li>Express.js</li>
+                </ul>
+            </div>
+            <div class="skill-row">
+                <div class="skill-label">
+                    <svg class="skill-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor">
+                        <ellipse cx="32" cy="12" rx="24" ry="8" stroke="currentColor" stroke-width="2" fill="none"/>
+                        <path d="M8,12 v32 c0,4.42 10.74,8 24,8 s24-3.58 24-8 V12" stroke="currentColor" stroke-width="2" fill="none"/>
+                    </svg>
+                    <span>Databases</span>
+                </div>
+                <ul class="skill-items">
+                    <li>MySQL</li>
+                    <li>PostgreSQL</li>
+                    <li>MongoDB</li>
+                </ul>
+            </div>
+            <div class="skill-row">
+                <div class="skill-label">
+                    <svg class="skill-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor">
+                        <circle cx="16" cy="16" r="6" stroke="currentColor" stroke-width="2" fill="none"/>
+                        <circle cx="16" cy="48" r="6" stroke="currentColor" stroke-width="2" fill="none"/>
+                        <circle cx="48" cy="32" r="6" stroke="currentColor" stroke-width="2" fill="none"/>
+                        <line x1="21" y1="18" x2="43" y2="29" stroke="currentColor" stroke-width="2"/>
+                        <line x1="21" y1="46" x2="43" y2="35" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                    <span>AI &amp; Machine Learning</span>
+                </div>
+                <ul class="skill-items">
+                    <li>OpenAI API</li>
+                    <li>Claude API</li>
+                    <li>OpenRouter</li>
+                    <li>Machine Learning</li>
+                    <li>CNN</li>
+                    <li>NLP</li>
+                    <li>Pandas</li>
+                    <li>NumPy</li>
+                </ul>
+            </div>
+            <div class="skill-row">
+                <div class="skill-label">
+                    <svg class="skill-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor">
+                        <path d="M48 36h-2a10 10 0 0 0-20-8 8 8 0 1 0-2 16h24a6 6 0 0 0 0-12z" stroke="currentColor" stroke-width="2" fill="none"/>
+                    </svg>
+                    <span>Version Control &amp; Deployment</span>
+                </div>
+                <ul class="skill-items">
+                    <li>Git</li>
+                    <li>GitHub</li>
+                    <li>GitHub Actions</li>
+                    <li>Docker</li>
+                    <li>Heroku</li>
+                    <li>Netlify</li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+    <section id="projects">
+        <h2 id="projects-title">Projects</h2>
+        <p id="projects-text">Here are some of the projects I've worked on:</p>
+        <div class="projects-grid">
+            <!-- Project Card -->
+            <div class="project-card">
+            <div class="mockup">
+                <img src="leakSight.png" alt="LeakSight">
+            </div>
+            
+            <div class="project-details">
+                <h3>LeakSight</h3>
+                <p>Web platform built with FastAPI, MongoDB, Redis, and Angular for monitoring data leaks and aggregating IoCs from multiple sources.</p>
+                <a href="https://github.com/GHYounesse/LeakSight-Backend" class="btn">View Project</a>
+            </div>
+            </div>
+            <div class="project-card">
+            <div class="mockup">
+                <img src="BugTracker.png" alt="BugTracker App">
+            </div>
+            <div class="project-details">
+                <h3>Bug Tracker</h3>
+                <p>A modern web application built with Symfony and Bootstrap to track, assign, and resolve bugs efficiently, improving issue management and simplifying the debugging process.</p>
+                <a href="https://github.com/GHYounesse/BugTracker" target="_blank" class="btn">View Project</a>
+            </div>
+            </div>
+            <div class="project-card">
+            <div class="mockup mockup-code">
+                <div class="code-window">
+                    <span class="code-window-label">response · 200 OK</span>
+                    <pre>GET /api/ioc/search?type=domain
+
+{
+  "indicator": "185.220.101.7",
+  "type": "ip",
+  "confidence": 0.92,
+  "source": "otx"
+}</pre>
+                </div>
+            </div>
+            <div class="project-details">
+                <h3>Baskit</h3>
+                <p>Ecommerce paltform Coming Soon.</p>
+                <a href="https://github.com/GHYounesse" target="_blank" class="btn">View Project</a>
+            </div>
+            </div>
+            
+        </div>
+    </section>
+
+
+    <section class="timeline">
+    <h2 id="timeline-title">My Journey</h2>
+    <div class="timeline-container">
+        <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+            <h3>2026 - Present</h3>
+            <p id="timeline-text-1">Full-Stack Developer at ADITYA. Building responsive web apps with React, Laravel, and NestJS styled with Tailwind, and mobile apps with React Native and Expo.</p>
+        </div>
+        </div>
+
+        
+
+        <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+            <h3>2024 - 2026</h3>
+            <p id="timeline-text-2">Master’s in Data Science & System Information. Learned Machine Learning fundamentals, Deep Learning, Data analytics, and software engineering principles.</p>
+        </div>
+        </div>
+
+        <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+            <h3>Oct 2024 - May 2025</h3>
+            <p id="timeline-text-3">Full-Stack Developer at CTM. Worked on a tracking project along with others internal apps using PHP and Angular .</p>
+        </div>
+        </div>
+
+        <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+            <h3>2022 - 2023</h3>
+            <p id="timeline-text-4">Professional Bachelor’s in Software Engineering & Systems/Network Administration. Built on that foundation with advanced software engineering, systems architecture, and network administration.</p>
+        </div>
+        </div>
+
+        <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+            <h3>2020 - 2022</h3>
+            <p id="timeline-text-5">University Diploma of Technology’s in Computer Engineering. Learned the fundamentals of web development, databases, and software engineering.</p>
+        </div>
+        </div>
+    </div>
+    </section>
+
+    <section id="contact">
+        <h2 id="contact-title">Contact</h2>
+        <p id="contact-text">Working on something interesting, hiring, or just want to talk shop? Send a message.</p>
+
+        <!-- Email CTA -->
+        <a id="contact-button" class="btn main-cta" href="mailto:ghalloumyounes2003@gmail.com">Email me</a>
+
+        <!-- Social Links -->
+        <div class="social-links">
+            <a href="https://github.com/GHYounesse" target="_blank" aria-label="GitHub">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M12 2C6.48 2 2 6.58 2 12.2c0 4.49 2.87 8.3 6.84 9.64.5.1.68-.22.68-.49 0-.24-.01-1.04-.01-1.88-2.78.62-3.37-1.19-3.37-1.19-.45-1.18-1.11-1.5-1.11-1.5-.9-.63.07-.62.07-.62 1 .07 1.53 1.05 1.53 1.05.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.06 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.31.1-2.73 0 0 .84-.28 2.75 1.05a9.29 9.29 0 0 1 5 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.42.2 2.47.1 2.73.64.72 1.03 1.63 1.03 2.75 0 3.93-2.34 4.79-4.57 5.05.36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.81 0 .27.18.6.69.49A10.02 10.02 0 0 0 22 12.2C22 6.58 17.52 2 12 2Z"/>
+                </svg>
+            </a>
+            <a href="https://www.linkedin.com/in/younes-ghalloum" target="_blank" aria-label="LinkedIn">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M6.94 5a2 2 0 1 1-4-.02 2 2 0 0 1 4 .02ZM7 8.48H3V21h4V8.48Zm6.32 0H9.34V21h3.94v-6.57c0-3.66 4.77-3.96 4.77 0V21H22v-7.93c0-6.17-7.06-5.95-8.68-2.91V8.48Z"/>
+                </svg>
+            </a>
+        </div>
+
+        <!-- Contact form, submits via Formspree -->
+        <form id="contact-form" class="contact-form" action="https://formspree.io/f/xwlpbvwk" method="POST">
+            <input type="text" name="name" placeholder="Your Name" required>
+            <input type="email" name="email" placeholder="Your Email" required>
+            <textarea name="message" placeholder="Your Message" required></textarea>
+            <button type="submit">Send Message</button>
+            <p id="form-status" class="form-status" role="status"></p>
+        </form>
+        </section>
+
+
+
+    <script src="script.js"></script>
+
+
+
+</body>
+</html>
