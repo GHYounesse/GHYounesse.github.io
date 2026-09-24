@@ -2,7 +2,7 @@
 
 Personal portfolio site: about, skills, projects, and contact info, built as a static HTML/CSS/JS site with English/French and light/dark toggles.
 
-**Live site:** _add your hosted URL here once deployed_
+**Live site:** https://ghyounesse.github.io
 
 ## Features
 
