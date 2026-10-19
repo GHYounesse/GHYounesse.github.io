@@ -6,7 +6,7 @@
     <title>Younes Ghalloum Portfolio</title>
     <link rel="icon" type="image/x-icon" href="logo.png">
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,200..800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <script>
         (function () {
             var saved = null;
@@ -44,9 +44,17 @@
         </div>
     </nav>
     <div class="hero">
-        <h1><span id="hero-title">Hi, I'm</span> <span class="name">Younes Ghalloum</span></h1>
-        <p>a  <span class="typing">Full-Stack Developer</span> <span id="hero-subtitle"> building backends with Laravel and NestJS, interfaces with React and React Native, and the infrastructure in between.</span></p>
-        <img src="pi.jpeg" alt="Younes Ghalloum">
+        <div class="hero-copy">
+            <h1><span id="hero-title">Hi, I'm</span> <span class="name">Younes Ghalloum</span></h1>
+            <span class="typing" aria-label="Full-Stack Developer">Full-Stack Developer</span>
+            <p class="stack-line" id="hero-ui">Interfaces with React and React Native</p>
+            <p class="stack-between" id="hero-between">the infrastructure in between</p>
+            <p class="stack-line" id="hero-api">Backends with Laravel and NestJS</p>
+            <a class="hero-cta" id="hero-cta" href="#projects">View projects</a>
+        </div>
+        <div class="hero-portrait">
+            <img src="pi.jpeg" alt="Younes Ghalloum">
+        </div>
     </div>
     <div class="about reveal">
         <h2 id="about-title">About Me</h2>
@@ -198,7 +206,6 @@
     <h2 id="timeline-title">My Journey</h2>
     <div class="timeline-container">
         <div class="timeline-item reveal">
-        <div class="timeline-dot"></div>
         <div class="timeline-content">
             <h3>2026 - Present</h3>
             <p id="timeline-text-1">Full-Stack Developer at ADITYA. Building responsive web apps with React, Laravel, and NestJS styled with Tailwind, and mobile apps with React Native and Expo.</p>
@@ -208,7 +215,6 @@
         
 
         <div class="timeline-item reveal">
-        <div class="timeline-dot"></div>
         <div class="timeline-content">
             <h3>2024 - 2026</h3>
             <p id="timeline-text-2">Master’s in Data Science & System Information. Learned Machine Learning fundamentals, Deep Learning, Data analytics, and software engineering principles.</p>
@@ -216,15 +222,13 @@
         </div>
 
         <div class="timeline-item reveal">
-        <div class="timeline-dot"></div>
         <div class="timeline-content">
             <h3>Oct 2024 - May 2025</h3>
-            <p id="timeline-text-3">Full-Stack Developer at CTM. Worked on a tracking project along with others internal apps using PHP and Angular .</p>
+            <p id="timeline-text-3">Full-Stack Developer at CTM. Worked on a tracking project along with other internal apps using PHP and Angular.</p>
         </div>
         </div>
 
         <div class="timeline-item reveal">
-        <div class="timeline-dot"></div>
         <div class="timeline-content">
             <h3>2022 - 2023</h3>
             <p id="timeline-text-4">Professional Bachelor’s in Software Engineering & Systems/Network Administration. Built on that foundation with advanced software engineering, systems architecture, and network administration.</p>
@@ -232,7 +236,6 @@
         </div>
 
         <div class="timeline-item reveal">
-        <div class="timeline-dot"></div>
         <div class="timeline-content">
             <h3>2020 - 2022</h3>
             <p id="timeline-text-5">University Diploma of Technology’s in Computer Engineering. Learned the fundamentals of web development, databases, and software engineering.</p>

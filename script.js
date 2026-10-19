@@ -44,6 +44,7 @@
             });
             }
     window.addEventListener("scroll", revealOnScroll);
+    revealOnScroll();
 
     const titles = ["Full-Stack Developer", "Designer", "Problem Solver"];
     let i = 0, j = 0, current = "", isDeleting = false;
@@ -73,7 +74,11 @@
 
     setTimeout(type, isDeleting ? 80 : 150);
     }
-    type();
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        el.textContent = titles[0];
+    } else {
+        type();
+    }
 
 
 const translations = {
@@ -84,7 +89,10 @@ const translations = {
     navContact: "Contact me",
 
     heroTitle: "Hi, I'm",
-    heroSubtitle: " building backends with Laravel and NestJS, interfaces with React and React Native, and the infrastructure in between.",
+    heroUi: "Interfaces with React and React Native",
+    heroBetween: "the infrastructure in between",
+    heroApi: "Backends with Laravel and NestJS",
+    heroCta: "View projects",
 
     aboutTitle: "About Me",
     aboutText: "I work across the stack — Laravel and NestJS lately, Django and FastAPI before that — with React, React Native, and Angular on the front end. I build whatever a project actually needs rather than sticking to one niche: during an internship I built LeakSight, a platform for aggregating threat-intelligence IoCs, and I've shipped everything from bug trackers to backend APIs since. Outside of client work, I build and ship personal projects to keep learning.",
@@ -99,7 +107,7 @@ const translations = {
     timelineItems: [
       "Full-Stack Developer at ADITYA. Building responsive web apps with React, Laravel, and NestJS styled with Tailwind, and mobile apps with React Native and Expo.",
       "Master's in Data Science & System Information. Learned Machine Learning fundamentals, Deep Learning, Data analytics, and software engineering principles.",
-      "Full-Stack Developer at CTM. Building responsive web apps with React and Django.",
+      "Full-Stack Developer at CTM. Worked on a tracking project along with other internal apps using PHP and Angular.",
       "Professional Bachelor's in Software Engineering & Systems/Network Administration. Built on that foundation with advanced software engineering, systems architecture, and network administration.",
       "University Diploma of Technology's in Computer Engineering. Learned the fundamentals of web development, databases, and software engineering."
     ],
@@ -114,9 +122,11 @@ const translations = {
     // navPortfolio: "Portfolio",
     navContact: "Contactez-moi",
 
-    heroTitle: "Bonjour, je suis ",
-
-    heroSubtitle: "qui construit des back-ends avec Laravel et NestJS, des interfaces avec React et React Native, et tout ce qu'il y a entre les deux.",
+    heroTitle: "Bonjour, je suis",
+    heroUi: "Des interfaces avec React et React Native",
+    heroBetween: "l'infrastructure entre les deux",
+    heroApi: "Des back-ends avec Laravel et NestJS",
+    heroCta: "Voir les projets",
 
     aboutTitle: "À propos de moi",
     aboutText: "Je travaille sur l'ensemble de la pile technique — Laravel et NestJS ces derniers temps, Django et FastAPI avant ça — avec React, React Native et Angular côté interface. Je construis ce dont un projet a réellement besoin plutôt que de me limiter à une niche : durant un stage, j'ai développé LeakSight, une plateforme d'agrégation d'IoC pour la threat intelligence, et j'ai livré aussi bien des trackers de bugs que des API backend depuis. En dehors des projets clients, je construis et déploie mes propres projets pour continuer à apprendre.",
@@ -131,7 +141,7 @@ const translations = {
     timelineItems: [
       "Développeur Full-Stack chez ADITYA. Développement d'applications web réactives avec React, Laravel et NestJS, stylées avec Tailwind, et d'applications mobiles avec React Native et Expo.",
       "Master en Data Science & Systèmes d'Information. Apprentissage des fondamentaux du Machine Learning, du Deep Learning, de l'analyse de données et des principes du génie logiciel.",
-      "Développeur Full-Stack chez CTM. Développement d'applications web réactives avec React et Django.",
+      "Développeur Full-Stack chez CTM. Travail sur un projet de suivi et sur d'autres applications internes avec PHP et Angular.",
       "Licence Professionnelle en Génie Logiciel & Administration Systèmes/Réseaux. Approfondissement de ces fondamentaux avec des notions avancées de génie logiciel, d'architecture systèmes et d'administration réseau.",
       "Diplôme Universitaire de Technologie en Génie Informatique. Apprentissage des fondamentaux du développement web, des bases de données et du génie logiciel."
     ],
@@ -151,7 +161,10 @@ function setLanguage(lang) {
   document.getElementById("nav-contact").textContent = translations[lang].navContact;
 
   document.getElementById("hero-title").textContent = translations[lang].heroTitle;
-  document.getElementById("hero-subtitle").textContent = translations[lang].heroSubtitle;
+  document.getElementById("hero-ui").textContent = translations[lang].heroUi;
+  document.getElementById("hero-between").textContent = translations[lang].heroBetween;
+  document.getElementById("hero-api").textContent = translations[lang].heroApi;
+  document.getElementById("hero-cta").textContent = translations[lang].heroCta;
 
   document.getElementById("about-title").textContent = translations[lang].aboutTitle;
   document.getElementById("about-text").textContent = translations[lang].aboutText;
