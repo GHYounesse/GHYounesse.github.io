@@ -47,6 +47,6 @@ pi.jpeg         Hero photo
 
 ## Contact
 
-- Email: ghalloumyounes2003@gmail.com
+- Email: simplelogin-newsletter.festivity961@simplelogin.com
 - GitHub: [GHYounesse](https://github.com/GHYounesse)
 - LinkedIn: [younes-ghalloum](https://www.linkedin.com/in/younes-ghalloum-09888a290)
