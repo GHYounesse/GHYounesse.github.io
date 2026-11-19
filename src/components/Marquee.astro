@@ -1,0 +1,14 @@
+---
+// A decorative ticker of the stack, shown in cinematic mode only.
+const words = ["Laravel", "Symfony", "Spring Boot", "NestJS", "React", "Angular", "TypeScript", "PostgreSQL", "Docker", "FastAPI", "Redis", "Tailwind CSS"];
+---
+
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    {[0, 1].map(() => (
+      <ul class="marquee-group">
+        {words.map((w) => <li>{w}</li>)}
+      </ul>
+    ))}
+  </div>
+</div>

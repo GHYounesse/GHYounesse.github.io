@@ -1,0 +1,74 @@
+---
+import "@fontsource-variable/bricolage-grotesque/wdth.css";
+import "@fontsource/jetbrains-mono/400.css";
+import "@fontsource/jetbrains-mono/500.css";
+import "@fontsource/instrument-serif/400.css";
+import "@fontsource/archivo-black/400.css";
+import "@fontsource-variable/space-grotesk/wght.css";
+import "@fontsource/space-mono/400.css";
+import "@fontsource/space-mono/700.css";
+import "@fontsource/vt323/400.css";
+import "@fontsource/ibm-plex-mono/400.css";
+import "@fontsource/ibm-plex-mono/500.css";
+import "@fontsource/ibm-plex-mono/700.css";
+import "../styles/global.css";
+import "../styles/editorial.css";
+import "../styles/cinematic.css";
+import "../styles/brutalist.css";
+import "../styles/terminal.css";
+import { DESIGN, SITE } from "../config";
+import type { Content } from "../content/types";
+
+interface Props {
+  content: Content;
+  /** Path of this page, e.g. "/" or "/fr/". The other language is derived from it. */
+  path: string;
+}
+
+const { content, path } = Astro.props;
+const enUrl = new URL("/", SITE.url).href;
+const frUrl = new URL("/fr/", SITE.url).href;
+const canonical = path === "/fr/" ? frUrl : enUrl;
+const ogImage = new URL("/og.png", SITE.url).href;
+---
+
+<!doctype html>
+<html lang={content.lang} data-design={DESIGN}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{content.meta.title}</title>
+    <meta name="description" content={content.meta.description} />
+    <link rel="icon" type="image/png" href="/logo.png" />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="en" href={enUrl} />
+    <link rel="alternate" hreflang="fr" href={frUrl} />
+    <link rel="alternate" hreflang="x-default" href={enUrl} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={content.meta.title} />
+    <meta property="og:description" content={content.meta.description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script is:inline>
+      // Runs before first paint: theme + "js" flag, so there is no flash of the wrong theme.
+      (function () {
+        var root = document.documentElement;
+        var saved = null;
+        try { saved = localStorage.getItem("theme"); } catch (e) {}
+        var prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+        // Cinematic and terminal are designed dark-first; the others follow the system.
+        var darkFirst = root.dataset.design === "cinematic" || root.dataset.design === "terminal";
+        var fallback = darkFirst ? "dark" : prefersDark ? "dark" : "light";
+        root.setAttribute("data-theme", saved || fallback);
+        root.classList.add("js");
+      })();
+    </script>
+  </head>
+  <body>
+    <slot />
+    <script>
+      import "../scripts/ui";
+    </script>
+  </body>
+</html>

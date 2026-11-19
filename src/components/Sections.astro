@@ -1,0 +1,129 @@
+---
+import { Image } from "astro:assets";
+import { skillGroups, projectMeta, timelinePeriods, type SkillId } from "../content/shared";
+import { SITE } from "../config";
+import type { Content } from "../content/types";
+
+interface Props {
+  c: Content;
+}
+const { c } = Astro.props;
+
+const icons: Record<SkillId, string> = {
+  frontend: `<rect x="4" y="12" width="56" height="40" rx="2"/><line x1="4" y1="20" x2="60" y2="20"/>`,
+  backend: `<rect x="8" y="8" width="48" height="16" rx="2"/><rect x="8" y="28" width="48" height="16" rx="2"/><rect x="8" y="48" width="48" height="8" rx="2"/>`,
+  databases: `<ellipse cx="32" cy="12" rx="24" ry="8"/><path d="M8,12 v32 c0,4.42 10.74,8 24,8 s24-3.58 24-8 V12"/>`,
+  ai: `<circle cx="16" cy="16" r="6"/><circle cx="16" cy="48" r="6"/><circle cx="48" cy="32" r="6"/><line x1="21" y1="18" x2="43" y2="29"/><line x1="21" y1="46" x2="43" y2="35"/>`,
+  devops: `<path d="M48 36h-2a10 10 0 0 0-20-8 8 8 0 1 0-2 16h24a6 6 0 0 0 0-12z"/>`,
+  languages: `<circle cx="32" cy="32" r="24"/><path d="M8 32h48M32 8c-12 12-12 36 0 48M32 8c12 12 12 36 0 48"/>`,
+};
+---
+
+<section class="section about" id="about" data-reveal>
+  <h2>{c.about.title}</h2>
+  <div class="section-body">
+    <p class="about-text" data-words>{c.about.text}</p>
+  </div>
+</section>
+
+<section class="section skills" id="skills" data-reveal>
+  <h2>{c.skills.title}</h2>
+  <p class="lead">{c.skills.text}</p>
+  <div class="section-body skills-list">
+    {skillGroups.map((g) => (
+      <div class="skill-row">
+        <div class="skill-label">
+          <svg class="skill-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" set:html={icons[g.id]} />
+          <span>{c.skills.labels[g.id]}</span>
+        </div>
+        <ul class="skill-items">
+          {(g.id === "languages" ? c.skills.languages : g.items).map((item) => <li>{item}</li>)}
+        </ul>
+      </div>
+    ))}
+  </div>
+</section>
+
+<section class="section projects" id="projects">
+  <h2 data-reveal>{c.projects.title}</h2>
+  <p class="lead" data-reveal>{c.projects.text}</p>
+  <div class="section-body projects-grid">
+    {c.projects.items.map((it, i) => {
+      const m = projectMeta[it.id];
+      return (
+        <article class="project-card" data-reveal style={`--i:${i}`}>
+          {m.image ? (
+            <div class="mockup">
+              <Image src={m.image} alt={it.name} widths={[600, 1000]} sizes="(max-width: 1100px) 100vw, 40vw" />
+            </div>
+          ) : (
+            <div class="mockup mockup-ph" role="img" aria-label={it.name}>
+              <span class="ph-initial" aria-hidden="true">{it.name.charAt(0).toUpperCase()}</span>
+              <span class="ph-stack" aria-hidden="true">{m.stack.slice(0, 3).join(" · ")}</span>
+            </div>
+          )}
+          <div class="project-details">
+            <h3>{it.name}</h3>
+            <p>{it.desc}</p>
+            <ul class="stack-tags">
+              {m.stack.map((s) => <li>{s}</li>)}
+            </ul>
+            <a class="btn" href={m.href} target="_blank" rel="noopener noreferrer">
+              {c.projects.cta} <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+        </article>
+      );
+    })}
+  </div>
+</section>
+
+<section class="section timeline" id="journey">
+  <h2 data-reveal>{c.timeline.title}</h2>
+  <ol class="section-body timeline-container">
+    {c.timeline.items.map((text, i) => (
+      <li class="timeline-item" data-reveal style={`--i:${i}`}>
+        <h3>{timelinePeriods[i]}</h3>
+        <p>{text}</p>
+      </li>
+    ))}
+  </ol>
+</section>
+
+<section class="section contact" id="contact" data-reveal>
+  <h2>{c.contact.title}</h2>
+  <p class="lead">{c.contact.text}</p>
+  <div class="contact-actions">
+    <a class="btn main-cta" href={`mailto:${SITE.email}`}>{c.contact.button}</a>
+    <div class="social-links">
+      <a href={SITE.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M12 2C6.48 2 2 6.58 2 12.2c0 4.49 2.87 8.3 6.84 9.64.5.1.68-.22.68-.49 0-.24-.01-1.04-.01-1.88-2.78.62-3.37-1.19-3.37-1.19-.45-1.18-1.11-1.5-1.11-1.5-.9-.63.07-.62.07-.62 1 .07 1.53 1.05 1.53 1.05.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.06 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.31.1-2.73 0 0 .84-.28 2.75 1.05a9.29 9.29 0 0 1 5 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.42.2 2.47.1 2.73.64.72 1.03 1.63 1.03 2.75 0 3.93-2.34 4.79-4.57 5.05.36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.81 0 .27.18.6.69.49A10.02 10.02 0 0 0 22 12.2C22 6.58 17.52 2 12 2Z" />
+        </svg>
+      </a>
+      <a href={SITE.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M6.94 5a2 2 0 1 1-4-.02 2 2 0 0 1 4 .02ZM7 8.48H3V21h4V8.48Zm6.32 0H9.34V21h3.94v-6.57c0-3.66 4.77-3.96 4.77 0V21H22v-7.93c0-6.17-7.06-5.95-8.68-2.91V8.48Z" />
+        </svg>
+      </a>
+    </div>
+  </div>
+
+  <form
+    class="contact-form"
+    action={SITE.formEndpoint}
+    method="POST"
+    data-sending={c.contact.form.sending}
+    data-sent={c.contact.form.sent}
+    data-error={c.contact.form.error}
+  >
+    <label class="sr-only" for="cf-name">{c.contact.form.name}</label>
+    <input id="cf-name" type="text" name="name" placeholder={c.contact.form.name} autocomplete="name" required />
+    <label class="sr-only" for="cf-email">{c.contact.form.email}</label>
+    <input id="cf-email" type="email" name="email" placeholder={c.contact.form.email} autocomplete="email" required />
+    <label class="sr-only" for="cf-message">{c.contact.form.message}</label>
+    <textarea id="cf-message" name="message" placeholder={c.contact.form.message} required></textarea>
+    <button type="submit">{c.contact.form.send}</button>
+    <p class="form-status" role="status"></p>
+  </form>
+</section>

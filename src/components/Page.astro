@@ -1,0 +1,27 @@
+---
+import Base from "../layouts/Base.astro";
+import Nav from "./Nav.astro";
+import Hero from "./Hero.astro";
+import Marquee from "./Marquee.astro";
+import Sections from "./Sections.astro";
+import { DESIGN } from "../config";
+import type { Content } from "../content/types";
+
+interface Props {
+  content: Content;
+}
+const { content } = Astro.props;
+const path = content.lang === "fr" ? "/fr/" : "/";
+---
+
+<Base content={content} path={path}>
+  <Nav c={content} />
+  <main id="main">
+    <Hero c={content} />
+    {(DESIGN === "cinematic" || DESIGN === "brutalist") && <Marquee />}
+    <Sections c={content} />
+  </main>
+  <footer class="site-footer">
+    <span>© {new Date().getFullYear()} Younes Ghalloum</span>
+  </footer>
+</Base>
