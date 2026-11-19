@@ -1,0 +1,408 @@
+/* Brutalist mode: thick borders, hard offset shadows, stickers, bouncy motion.
+   Fonts: Archivo Black (headings), Space Grotesk (body), Space Mono (tags/labels).
+   Tilts use the standalone `rotate` property so they never fight the intro/reveal `transform`. */
+
+html[data-design="brutalist"] {
+    --rise: 38px;
+    --font-display: 'Space Grotesk Variable', system-ui, sans-serif;
+    --font-head: 'Archivo Black', 'Space Grotesk Variable', system-ui, sans-serif;
+    --font-mono: 'Space Mono', ui-monospace, Consolas, monospace;
+
+    --b-ink: #111111;
+    --b-yellow: #ffd23f;
+    --b-pink: #ff7ab8;
+    --b-blue: #6c9bff;
+    --b-green: #3ddc84;
+    --b-mark: #ffd23f;               /* highlighter behind headings */
+    --bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+    --color-primary: #ff5c1a;
+    --color-accent: #ff7a45;
+    --hero-bg: #f4efe6;
+    --hero-fg: #111111;
+    --hero-muted: #3d3a35;
+    --hero-line: #111111;
+    --field-bg: #ffffff;
+    --glass: #ffffff;
+    --portrait-bg: #6c9bff;
+}
+
+html[data-design="brutalist"][data-theme="dark"] {
+    --b-ink: #f4efe6;
+    --b-mark: color-mix(in srgb, #ff5c1a 70%, transparent);
+    --hero-bg: #151515;
+    --hero-fg: #f4efe6;
+    --hero-muted: #cfc9bd;
+    --hero-line: #f4efe6;
+    --field-bg: #1f1f1f;
+    --glass: #1f1f1f;
+}
+
+html[data-design="brutalist"] ::selection { background: var(--b-yellow); color: #111; }
+
+/* ---------- Motion: pop in with overshoot ---------- */
+
+html[data-design="brutalist"].js [data-intro] {
+    animation-name: pop;
+    animation-duration: 0.7s;
+    animation-timing-function: var(--bounce);
+    animation-delay: calc(var(--d, 0) * 80ms);
+}
+@keyframes pop {
+    from { opacity: 0; transform: translateY(var(--rise)) scale(0.92); }
+    to   { opacity: 1; transform: none; }
+}
+
+html[data-design="brutalist"].js [data-reveal] {
+    rotate: calc(var(--tilt, 0deg) - 2.5deg);
+    transition-property: opacity, transform, rotate;
+    transition-duration: 0.5s, 0.7s, 0.7s;
+    transition-timing-function: ease, var(--bounce), var(--bounce);
+    transition-delay: calc(var(--i, 0) * 80ms);
+}
+html[data-design="brutalist"].js [data-reveal].is-visible { rotate: var(--tilt, 0deg); }
+
+@media (prefers-reduced-motion: reduce) {
+    html[data-design="brutalist"].js [data-reveal] { rotate: var(--tilt, 0deg); }
+    html[data-design="brutalist"] .hero-portrait::after,
+    html[data-design="brutalist"] .marquee-track { animation: none; }
+}
+
+/* ---------- Nav ---------- */
+
+html[data-design="brutalist"] nav { border-bottom: 3px solid var(--hero-line); }
+html[data-design="brutalist"] nav ul li a { font-weight: 700; color: var(--hero-fg); }
+html[data-design="brutalist"] nav ul li a::after { height: 3px; bottom: 2px; }
+html[data-design="brutalist"] .lang-option { font-weight: 700; color: var(--hero-fg); }
+html[data-design="brutalist"] .lang-option[aria-current="true"] { background: var(--b-yellow); color: #111; padding: 0 8px; }
+html[data-design="brutalist"] .lang-switch-divider { color: var(--hero-fg); }
+html[data-design="brutalist"] .theme-toggle { color: var(--hero-fg); }
+
+/* ---------- Hero: always yellow with ink text, in both themes ---------- */
+
+html[data-design="brutalist"] .hero {
+    --hero-fg: #111111;
+    --hero-muted: #3d3a35;
+    --hero-line: #111111;
+    align-items: center;
+    min-height: min(calc(100svh - 92px), 900px);
+    background:
+        radial-gradient(rgba(17, 17, 17, 0.16) 1.6px, transparent 1.7px) 0 0 / 22px 22px,
+        var(--b-yellow);
+    border-bottom: 3px solid #111;
+}
+
+html[data-design="brutalist"] .hero h1 { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
+
+html[data-design="brutalist"] .hero .greeting {
+    display: inline-block;
+    padding: 4px 14px;
+    background: #111;
+    color: var(--b-yellow);
+    font-family: var(--font-mono);
+    font-size: clamp(13px, 1.2vw, 16px);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    rotate: -2deg;
+}
+
+html[data-design="brutalist"] .hero .name {
+    display: block;
+    font-family: var(--font-head);
+    font-weight: 400;
+    font-size: clamp(46px, 7.2vw, 116px);
+    line-height: 0.9;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    color: #111;
+    text-shadow: 5px 5px 0 var(--color-primary);
+    text-wrap: balance;
+}
+
+html[data-design="brutalist"] .hero .typing {
+    display: inline-block;
+    width: fit-content;
+    min-height: 0;
+    margin: 20px 0 26px;
+    padding: 6px 14px;
+    border: 3px solid #111;
+    background: #fff;
+    color: #111;
+    font-family: var(--font-mono);
+    font-size: 15px;
+    font-weight: 700;
+    box-shadow: 4px 4px 0 #111;
+}
+
+html[data-design="brutalist"] .stack-line {
+    max-width: 20em;
+    font-family: var(--font-head);
+    font-weight: 400;
+    font-variation-settings: normal;
+    font-size: clamp(19px, 2.2vw, 32px);
+    line-height: 1.12;
+    letter-spacing: 0;
+    text-transform: uppercase;
+}
+
+html[data-design="brutalist"] .stack-between {
+    display: inline-block;
+    width: fit-content;
+    margin: 16px 0;
+    padding: 4px 14px;
+    border: 3px solid #111;
+    background: var(--b-pink);
+    color: #111;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 700;
+    rotate: -1.5deg;
+}
+
+html[data-design="brutalist"] .hero-cta {
+    border: 3px solid #111;
+    border-radius: 0;
+    padding: 14px 28px;
+    background: var(--color-primary);
+    color: #111;
+    font-family: var(--font-head);
+    font-weight: 400;
+    font-size: 17px;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    box-shadow: 6px 6px 0 #111;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+}
+html[data-design="brutalist"] .hero-cta:hover { background: var(--b-pink); transform: translate(-3px, -3px); box-shadow: 9px 9px 0 #111; }
+html[data-design="brutalist"] .hero-cta:active { transform: translate(4px, 4px); box-shadow: 2px 2px 0 #111; }
+
+html[data-design="brutalist"] .hero-portrait {
+    position: relative;
+    justify-self: center;
+    align-self: center;
+    width: min(100%, 430px);
+    min-height: 0;
+    aspect-ratio: 4 / 5;
+    margin: 56px clamp(28px, 5vw, 80px) 56px 0;
+    overflow: visible;
+    border: 3px solid #111;
+    background: var(--b-blue);
+    box-shadow: 12px 12px 0 #111;
+    rotate: 2.5deg;
+}
+
+/* Spinning sticker badge on the portrait */
+html[data-design="brutalist"] .hero-portrait::after {
+    content: "✺";
+    position: absolute;
+    top: -38px;
+    right: -34px;
+    display: grid;
+    place-items: center;
+    width: 88px;
+    height: 88px;
+    border: 3px solid #111;
+    border-radius: 50%;
+    background: var(--color-primary);
+    color: #111;
+    font-size: 46px;
+    line-height: 1;
+    animation: spin 12s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+@media (max-width: 860px) {
+    html[data-design="brutalist"] .hero { min-height: 0; }
+    html[data-design="brutalist"] .hero-portrait {
+        width: min(72%, 320px);
+        height: auto;
+        margin: 8px auto 56px;
+    }
+    html[data-design="brutalist"] .hero-portrait::after { right: -22px; top: -28px; width: 68px; height: 68px; font-size: 36px; }
+}
+
+/* ---------- Tilted marquee band ---------- */
+
+html[data-design="brutalist"] .marquee {
+    width: 104%;
+    margin: 36px -2% 36px;
+    padding: 14px 0;
+    overflow: hidden;
+    background: #111;
+    border-block: 3px solid #111;
+    rotate: -1.4deg;
+}
+html[data-design="brutalist"] .marquee-track { animation-duration: 26s; }
+html[data-design="brutalist"] .marquee-group li {
+    padding-right: 40px;
+    font-family: var(--font-head);
+    font-size: clamp(22px, 3vw, 42px);
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: var(--b-yellow);
+}
+html[data-design="brutalist"] .marquee-group li::after { content: "★"; margin-left: 40px; color: var(--b-pink); }
+
+/* ---------- Sections ---------- */
+
+html[data-design="brutalist"] .section { border-top: 3px solid var(--hero-line); }
+
+html[data-design="brutalist"] .section h2 {
+    width: fit-content;
+    align-self: start;
+    font-family: var(--font-head);
+    font-weight: 400;
+    font-variation-settings: normal;
+    font-size: clamp(34px, 4.6vw, 66px);
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    background: linear-gradient(transparent 58%, var(--b-mark) 58%);
+}
+
+html[data-design="brutalist"] .section .lead {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--hero-fg);
+}
+
+html[data-design="brutalist"] .about-text {
+    max-width: 32em;
+    padding-left: 24px;
+    border-left: 8px solid var(--color-primary);
+    font-size: clamp(20px, 2vw, 28px);
+    font-weight: 500;
+    line-height: 1.45;
+}
+
+/* Skills: coloured chips that wiggle */
+html[data-design="brutalist"] .skills-list { border-top: 3px solid var(--hero-line); }
+html[data-design="brutalist"] .skill-row { border-bottom: 3px solid var(--hero-line); }
+html[data-design="brutalist"] .skill-icon { color: var(--hero-fg); }
+html[data-design="brutalist"] .skill-label span { font-weight: 700; }
+
+html[data-design="brutalist"] .skill-items { gap: 10px; }
+html[data-design="brutalist"] .skill-items li {
+    padding: 3px 10px;
+    border: 2px solid #111;
+    color: #111;
+    font-weight: 700;
+    box-shadow: 3px 3px 0 var(--b-ink);
+    transition: transform 0.15s var(--bounce);
+}
+html[data-design="brutalist"] .skill-items li:nth-child(4n + 1),
+html[data-design="brutalist"] .stack-tags li:nth-child(4n + 1) { background: var(--b-yellow); }
+html[data-design="brutalist"] .skill-items li:nth-child(4n + 2),
+html[data-design="brutalist"] .stack-tags li:nth-child(4n + 2) { background: var(--b-pink); }
+html[data-design="brutalist"] .skill-items li:nth-child(4n + 3),
+html[data-design="brutalist"] .stack-tags li:nth-child(4n + 3) { background: var(--b-blue); }
+html[data-design="brutalist"] .skill-items li:nth-child(4n + 4),
+html[data-design="brutalist"] .stack-tags li:nth-child(4n + 4) { background: var(--b-green); }
+html[data-design="brutalist"] .skill-items li:hover { animation: wiggle 0.35s ease-in-out; }
+@keyframes wiggle {
+    25% { transform: rotate(-4deg) translateY(-2px); }
+    75% { transform: rotate(4deg) translateY(-2px); }
+}
+
+/* Timeline: period as a black label */
+html[data-design="brutalist"] .timeline-container { border-top: 3px solid var(--hero-line); }
+html[data-design="brutalist"] .timeline-item { border-bottom: 3px solid var(--hero-line); }
+html[data-design="brutalist"] .timeline-item h3 {
+    width: fit-content;
+    align-self: start;
+    padding: 2px 10px;
+    background: var(--b-ink);
+    color: var(--hero-bg);
+    font-family: var(--font-mono);
+    font-weight: 700;
+    rotate: -1.5deg;
+}
+
+/* ---------- Project cards: tilted slabs with hard shadows ---------- */
+
+html[data-design="brutalist"] .projects-grid { display: grid; gap: 40px; padding: 0 10px 10px 0; }
+
+html[data-design="brutalist"] .project-card {
+    --tilt: -0.8deg;
+    padding: 18px;
+    border: 3px solid var(--hero-line);
+    background: var(--glass);
+    box-shadow: 8px 8px 0 var(--b-ink);
+    transition: translate 0.25s var(--bounce), box-shadow 0.25s var(--bounce), rotate 0.4s var(--bounce), opacity 0.5s ease, transform 0.7s var(--bounce);
+}
+html[data-design="brutalist"] .project-card:nth-child(even) { --tilt: 0.8deg; }
+html[data-design="brutalist"] .project-card:first-child { padding-top: 18px; border-top: 3px solid var(--hero-line); }
+html[data-design="brutalist"] .project-card:hover { --tilt: 0deg; translate: -4px -4px; box-shadow: 13px 13px 0 var(--b-ink); }
+
+html[data-design="brutalist"] .mockup { border: 3px solid var(--hero-line); border-radius: 0; background: var(--b-yellow); }
+html[data-design="brutalist"] .project-details h3 { font-family: var(--font-head); font-weight: 400; font-size: 28px; text-transform: uppercase; }
+html[data-design="brutalist"] .project-details p { color: var(--hero-fg); }
+
+html[data-design="brutalist"] .stack-tags { gap: 8px; }
+html[data-design="brutalist"] .stack-tags li { padding: 1px 8px; border: 2px solid #111; color: #111; font-weight: 700; }
+
+html[data-design="brutalist"] .btn {
+    border: 3px solid #111;
+    border-radius: 0;
+    background: var(--b-yellow);
+    color: #111;
+    font-family: var(--font-head);
+    font-weight: 400;
+    text-transform: uppercase;
+    box-shadow: 4px 4px 0 #111;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+}
+html[data-design="brutalist"] .btn:hover { background: var(--b-pink); color: #111; transform: translate(-2px, -2px); box-shadow: 7px 7px 0 #111; }
+html[data-design="brutalist"] .btn:active { transform: translate(3px, 3px); box-shadow: 1px 1px 0 #111; }
+
+/* ---------- Contact ---------- */
+
+html[data-design="brutalist"] .contact-form input,
+html[data-design="brutalist"] .contact-form textarea {
+    border: 3px solid var(--hero-line);
+    border-radius: 0;
+    background: var(--field-bg);
+    font-weight: 500;
+    transition: box-shadow 0.15s ease, translate 0.15s ease;
+}
+html[data-design="brutalist"] .contact-form input:focus,
+html[data-design="brutalist"] .contact-form textarea:focus {
+    border-color: var(--hero-line);
+    box-shadow: 6px 6px 0 var(--color-primary);
+    translate: -3px -3px;
+}
+html[data-design="brutalist"] .contact-form button {
+    border: 3px solid #111;
+    border-radius: 0;
+    color: #111;
+    font-family: var(--font-head);
+    font-weight: 400;
+    text-transform: uppercase;
+    box-shadow: 5px 5px 0 var(--b-ink);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+html[data-design="brutalist"] .contact-form button:hover { transform: translate(-2px, -2px); box-shadow: 8px 8px 0 var(--b-ink); }
+html[data-design="brutalist"] .contact-form button:active { transform: translate(3px, 3px); box-shadow: 1px 1px 0 var(--b-ink); }
+
+html[data-design="brutalist"] .social-links a {
+    border: 3px solid var(--hero-line);
+    border-radius: 0;
+    background: var(--glass);
+    box-shadow: 4px 4px 0 var(--b-ink);
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+}
+html[data-design="brutalist"] .social-links a:hover {
+    background: var(--b-yellow);
+    color: #111;
+    border-color: var(--hero-line);
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0 var(--b-ink);
+}
+
+html[data-design="brutalist"] .site-footer {
+    border-top: 3px solid var(--hero-line);
+    font-weight: 700;
+    color: var(--hero-fg);
+}
