@@ -1,4 +1,7 @@
-/** Behaviour shared by both design modes: theme toggle, typing effect, reveal-on-scroll, contact form. */
+/** Behaviour for the whole page: theme toggle, typing effect, reveal-on-scroll, contact form, and the late-loaded animation code. */
+
+// Marks this file as a module so its top-level names (e.g. `status`) don't clash with browser globals.
+export {};
 
 const root = document.documentElement;
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -90,9 +93,22 @@ if (form && status) {
   });
 }
 
-// ---- Cinematic extras are code-split: editorial mode never downloads them ----
-if (root.dataset.design === "cinematic") {
-  import("./cinematic");
-} else if (root.dataset.design === "terminal") {
-  import("./terminal");
+// ---- Cinematic extras are code-split and loaded late ----
+
+/**
+ * Runs `task` once the page has finished loading and the browser is idle. The cinematic extras (GSAP, Lenis, the
+ * shader) are decoration, so they must not compete with first paint and early interactivity: loading them
+ * straight away cost over a second of main-thread blocking in Lighthouse.
+ */
+function afterLoadWhenIdle(task: () => void) {
+  const schedule = () => {
+    if (typeof window.requestIdleCallback === "function") window.requestIdleCallback(task, { timeout: 2000 });
+    else window.setTimeout(task, 200);
+  };
+  if (document.readyState === "complete") schedule();
+  else window.addEventListener("load", schedule, { once: true });
 }
+
+afterLoadWhenIdle(() => {
+  import("./cinematic").catch((error) => console.warn("Cinematic effects failed to load:", error));
+});

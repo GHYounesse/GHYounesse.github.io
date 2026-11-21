@@ -1,5 +1,10 @@
 /* Cinematic mode: dark-first, WebGL hero, glass cards, big type, grain. */
 
+/* Fonts: imported here, next to the design that uses them (see ALLOWED_FONT_FAMILIES in the perf tests). */
+@import "@fontsource-variable/bricolage-grotesque/wdth.css";
+@import "@fontsource/jetbrains-mono/400.css";
+@import "@fontsource/jetbrains-mono/500.css";
+
 html[data-design="cinematic"] {
     --rise: 28px;
 }
@@ -53,6 +58,12 @@ html[data-design="cinematic"] .hero-canvas {
     width: 100%;
     height: 100%;
     display: block;
+    opacity: 0; /* the shader starts after load (see afterLoadWhenIdle in ui.ts) and fades in */
+    transition: opacity 0.9s ease;
+}
+html[data-design="cinematic"] .hero-canvas.ready { opacity: 1; }
+@media (prefers-reduced-motion: reduce) {
+    html[data-design="cinematic"] .hero-canvas { transition: none; }
 }
 
 html[data-design="cinematic"] .hero h1 {
@@ -124,12 +135,7 @@ html[data-design="cinematic"] .hero-portrait img { transform: scale(1.12); }
     }
 }
 
-/* ---------- Marquee ---------- */
-
-.marquee { overflow: hidden; }
-.marquee-track { display: flex; width: max-content; animation: marquee 48s linear infinite; }
-.marquee-group { display: flex; flex-shrink: 0; margin: 0; padding: 0; list-style: none; }
-@keyframes marquee { to { transform: translateX(-50%); } }
+/* ---------- Marquee (structure lives in global.css) ---------- */
 
 html[data-design="cinematic"] .marquee {
     padding: 22px 0;

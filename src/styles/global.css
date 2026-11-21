@@ -1,6 +1,7 @@
 /* ==========================================================================
-   Shared structure + tokens. Mode-specific looks live in editorial.css and
-   cinematic.css, scoped by html[data-design="..."].
+   Structure + tokens. The visual design (dark-first WebGL hero, glass cards,
+   grain, fonts) lives in cinematic.css, scoped by html[data-design="cinematic"]
+   (the attribute is fixed in the Base layout).
    ========================================================================== */
 
 :root {
@@ -33,10 +34,10 @@ html[data-theme="dark"] {
     --glass: rgba(255, 255, 255, 0.04);
     --ok-text: #6fd88a;
     --err-text: #ff8c8c;
+    color-scheme: dark;
 }
 
 html { color-scheme: light; scroll-behavior: smooth; }
-html[data-theme="dark"] { color-scheme: dark; }
 
 * { box-sizing: border-box; }
 
@@ -62,7 +63,7 @@ body {
     margin: -1px;
     padding: 0;
     overflow: hidden;
-    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
     white-space: nowrap;
     border: 0;
 }
@@ -530,3 +531,10 @@ html[data-theme="dark"] .icon-moon { display: none; }
     .timeline-item { grid-template-columns: 1fr; gap: 8px; }
     .contact-form button { align-self: stretch; }
 }
+
+/* ---------- Marquee: structure (cinematic.css styles the text and the band) ---------- */
+
+.marquee { overflow: hidden; }
+.marquee-track { display: flex; width: max-content; animation: marquee 48s linear infinite; }
+.marquee-group { display: flex; flex-shrink: 0; margin: 0; padding: 0; list-style: none; }
+@keyframes marquee { to { transform: translateX(-50%); } }

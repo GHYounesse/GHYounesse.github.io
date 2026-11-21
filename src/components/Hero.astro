@@ -1,7 +1,6 @@
 ---
 import { Image } from "astro:assets";
 import portrait from "../assets/portrait.jpg";
-import { DESIGN } from "../config";
 import type { Content } from "../content/types";
 
 interface Props {
@@ -12,10 +11,10 @@ const h = c.hero;
 ---
 
 <section class="hero" id="top">
-  {DESIGN === "cinematic" && <canvas class="hero-canvas" aria-hidden="true"></canvas>}
+  <canvas class="hero-canvas" aria-hidden="true"></canvas>
   <div class="hero-copy">
     <h1 data-intro style="--d:0">
-      <span class="greeting">{h.greeting}</span>{" "}<span class="name" data-text={h.name}>{h.name}</span>
+      <span class="greeting">{h.greeting}</span>{" "}<span class="name">{h.name}</span>
     </h1>
     <p class="typing" data-intro style="--d:1">
       <span class="sr-only">{h.titles[0]}</span>
@@ -33,6 +32,7 @@ const h = c.hero;
       widths={[480, 800, 1200]}
       sizes="(max-width: 860px) 100vw, 42vw"
       loading="eager"
+      fetchpriority="high"
     />
   </div>
 </section>

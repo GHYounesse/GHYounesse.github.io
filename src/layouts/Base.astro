@@ -1,22 +1,7 @@
 ---
-import "@fontsource-variable/bricolage-grotesque/wdth.css";
-import "@fontsource/jetbrains-mono/400.css";
-import "@fontsource/jetbrains-mono/500.css";
-import "@fontsource/instrument-serif/400.css";
-import "@fontsource/archivo-black/400.css";
-import "@fontsource-variable/space-grotesk/wght.css";
-import "@fontsource/space-mono/400.css";
-import "@fontsource/space-mono/700.css";
-import "@fontsource/vt323/400.css";
-import "@fontsource/ibm-plex-mono/400.css";
-import "@fontsource/ibm-plex-mono/500.css";
-import "@fontsource/ibm-plex-mono/700.css";
 import "../styles/global.css";
-import "../styles/editorial.css";
 import "../styles/cinematic.css";
-import "../styles/brutalist.css";
-import "../styles/terminal.css";
-import { DESIGN, SITE } from "../config";
+import { SITE } from "../config";
 import type { Content } from "../content/types";
 
 interface Props {
@@ -33,7 +18,7 @@ const ogImage = new URL("/og.png", SITE.url).href;
 ---
 
 <!doctype html>
-<html lang={content.lang} data-design={DESIGN}>
+<html lang={content.lang} data-design="cinematic">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -53,14 +38,15 @@ const ogImage = new URL("/og.png", SITE.url).href;
     <script is:inline>
       // Runs before first paint: theme + "js" flag, so there is no flash of the wrong theme.
       (function () {
-        var root = document.documentElement;
-        var saved = null;
-        try { saved = localStorage.getItem("theme"); } catch (e) {}
-        var prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
-        // Cinematic and terminal are designed dark-first; the others follow the system.
-        var darkFirst = root.dataset.design === "cinematic" || root.dataset.design === "terminal";
-        var fallback = darkFirst ? "dark" : prefersDark ? "dark" : "light";
-        root.setAttribute("data-theme", saved || fallback);
+        const root = document.documentElement;
+        let saved = null;
+        try {
+          saved = localStorage.getItem("theme");
+        } catch {
+          // Storage can be blocked (private mode, site data off); fall back to the default below.
+        }
+        // The design is dark-first: dark unless the visitor chose otherwise with the toggle.
+        root.setAttribute("data-theme", saved || "dark");
         root.classList.add("js");
       })();
     </script>
