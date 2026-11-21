@@ -2,7 +2,6 @@ import type { ImageMetadata } from "astro";
 import leaksight from "../assets/leaksight.png";
 import bugtracker from "../assets/bugtracker.png";
 import baskit from "../assets/baskit.png";
-import { SITE } from "../config";
 
 /** Language-independent data. Text that needs translating lives in en.ts / fr.ts. */
 
@@ -10,18 +9,58 @@ export const skillGroups = [
   {
     id: "backend",
     items: [
-      "PHP", "Laravel", "Symfony", "API Platform", "Java", "Spring Boot", "Spring Security", "Spring Cloud",
-      "Hibernate / JPA", "NestJS", "Prisma", "Python", "FastAPI", "Doctrine ORM", "REST APIs", "JWT", "RBAC", "Maven",
+      "PHP",
+      "Laravel",
+      "Symfony",
+      "API Platform",
+      "Java",
+      "Spring Boot",
+      "Spring Security",
+      "Spring Cloud",
+      "Hibernate / JPA",
+      "NestJS",
+      "Prisma",
+      "Python",
+      "FastAPI",
+      "Doctrine ORM",
+      "REST APIs",
+      "JWT",
+      "RBAC",
+      "Maven",
     ],
   },
   {
     id: "frontend",
-    items: ["React", "Inertia.js", "Angular", "TypeScript", "RxJS", "JavaScript", "Tailwind CSS", "Bootstrap", "HTML5", "CSS3"],
+    items: [
+      "React",
+      "Inertia.js",
+      "Angular",
+      "TypeScript",
+      "RxJS",
+      "JavaScript",
+      "Tailwind CSS",
+      "Bootstrap",
+      "HTML5",
+      "CSS3",
+    ],
   },
   { id: "databases", items: ["PostgreSQL", "MySQL", "SQL", "MongoDB", "Redis"] },
   {
     id: "devops",
-    items: ["Docker", "Git", "GitHub", "GitHub Actions (CI/CD)", "Flyway", "Postman", "JUnit", "Mockito", "Pest", "PHPUnit", "Playwright", "Jira"],
+    items: [
+      "Docker",
+      "Git",
+      "GitHub",
+      "GitHub Actions (CI/CD)",
+      "Flyway",
+      "Postman",
+      "JUnit",
+      "Mockito",
+      "Pest",
+      "PHPUnit",
+      "Playwright",
+      "Jira",
+    ],
   },
   { id: "ai", items: ["LLM APIs (OpenRouter, Groq)", "AssemblyAI", "Claude Code", "Codex"] },
   // Spoken languages are translated, so their items live in en.ts / fr.ts.
