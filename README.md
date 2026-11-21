@@ -1,19 +1,16 @@
 # Younes Ghalloum — Portfolio
 
-Personal portfolio: about, skills, projects, and contact. Built with [Astro](https://astro.build) as a static site, in English and French, with two switchable visual designs.
+Personal portfolio: about, skills, projects, and contact. Built with [Astro](https://astro.build) as a static site, in English and French.
 
 **Live site:** https://younesghalloum.dev
 
 ## Features
 
-- Four design modes, switched by one value in `src/config.ts`:
-  - **cinematic**: WebGL shader hero, smooth scrolling, scroll-driven text, glass project cards with cursor spotlight
-  - **editorial**: quiet, typographic, ships no animation libraries
-  - **brutalist**: thick borders, hard shadows, stickers, bouncy motion, tilted marquee
-  - **terminal**: green CRT shell with scanlines, a boot log, a glitching name and `$` prompt headings
+- Dark-first design with a WebGL shader hero, smooth scrolling, scroll-driven text, a stack marquee and glass project cards with a cursor spotlight
 - English (`/`) and French (`/fr/`) pages with `hreflang` links
 - Light / dark theme (remembers your choice)
 - Respects `prefers-reduced-motion`; content stays visible if scripts fail
+- The animation code is loaded after the page is idle, so it doesn't block first paint
 
 ## Getting started
 
@@ -24,7 +21,13 @@ npm run build     # static output in dist/
 npm run preview
 ```
 
-To change the design, edit `DESIGN` in `src/config.ts` and rebuild, or build one-off with `PUBLIC_DESIGN=terminal npm run build`.
+### Checks
+
+```bash
+npm run verify:fast     # lint + type check + unit tests (seconds)
+npm run verify          # + test build, HTML validation, Playwright, Lighthouse, security
+npm run dev:mock        # dev server with a local mock of the contact-form endpoint
+```
 
 ## Deployment
 
