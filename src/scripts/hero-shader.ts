@@ -1,4 +1,5 @@
 import { Renderer, Program, Mesh, Triangle } from "ogl";
+import { hexToRgb, palettes, themeFromAttribute } from "./shader-palette";
 
 const vertex = /* glsl */ `
   attribute vec2 position;
@@ -62,18 +63,6 @@ const fragment = /* glsl */ `
   }
 `;
 
-type Palette = { bg: string; a: string; b: string; strength: number };
-
-const palettes: Record<"dark" | "light", Palette> = {
-  dark: { bg: "#0a0b0f", a: "#ff6b35", b: "#4a3fd6", strength: 0.62 },
-  light: { bg: "#efefec", a: "#ffb089", b: "#b8b2ff", strength: 0.75 },
-};
-
-function hexToRgb(hex: string): [number, number, number] {
-  const n = parseInt(hex.slice(1), 16);
-  return [(n >> 16) / 255, ((n >> 8) & 255) / 255, (n & 255) / 255];
-}
-
 export function initHeroShader(canvas: HTMLCanvasElement, opts: { animate: boolean }) {
   const hero = canvas.parentElement as HTMLElement;
   const root = document.documentElement;
@@ -109,7 +98,7 @@ export function initHeroShader(canvas: HTMLCanvasElement, opts: { animate: boole
   const mesh = new Mesh(gl, { geometry: new Triangle(gl), program });
 
   const applyPalette = () => {
-    const p = palettes[root.getAttribute("data-theme") === "light" ? "light" : "dark"];
+    const p = palettes[themeFromAttribute(root.getAttribute("data-theme"))];
     program.uniforms.uBg.value = hexToRgb(p.bg);
     program.uniforms.uA.value = hexToRgb(p.a);
     program.uniforms.uB.value = hexToRgb(p.b);
@@ -130,6 +119,8 @@ export function initHeroShader(canvas: HTMLCanvasElement, opts: { animate: boole
     renderer.render({ scene: mesh });
   };
   draw(0);
+  // The shader starts after the page has loaded, so it fades in over the CSS gradient behind it.
+  canvas.classList.add("ready");
 
   // Theme changes swap the palette (and repaint once if we're not animating).
   new MutationObserver(() => {

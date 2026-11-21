@@ -35,14 +35,17 @@ if (!reduceMotion) {
     const text = p.textContent ?? "";
     p.setAttribute("aria-label", text);
     p.textContent = "";
-    const words = text.split(/\s+/).filter(Boolean).map((word) => {
-      const span = document.createElement("span");
-      span.className = "word";
-      span.setAttribute("aria-hidden", "true");
-      span.textContent = word + " ";
-      p.appendChild(span);
-      return span;
-    });
+    const words = text
+      .split(/\s+/)
+      .filter(Boolean)
+      .map((word) => {
+        const span = document.createElement("span");
+        span.className = "word";
+        span.setAttribute("aria-hidden", "true");
+        span.textContent = word + " ";
+        p.appendChild(span);
+        return span;
+      });
     gsap.fromTo(
       words,
       { opacity: 0.16 },
