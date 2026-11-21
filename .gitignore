@@ -12,6 +12,13 @@ node_modules/
 dist/
 .astro/
 
+# Test and verification output
+.test-dist/
+coverage/
+playwright-report/
+test-results/
+.lighthouseci/
+
 # Local env (never commit)
 .env
 .env.*
