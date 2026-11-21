@@ -5,6 +5,10 @@ on:
     branches: [main]
   workflow_dispatch:
 
+# The deploy uses an SSH key from secrets, so the GitHub token itself only needs to read the repo.
+permissions:
+  contents: read
+
 concurrency:
   group: deploy
   cancel-in-progress: true
