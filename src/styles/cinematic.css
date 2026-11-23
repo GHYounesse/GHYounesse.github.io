@@ -1,0 +1,250 @@
+/* Cinematic mode: dark-first, WebGL hero, glass cards, big type, grain. */
+
+/* Fonts: imported here, next to the design that uses them (see ALLOWED_FONT_FAMILIES in the perf tests). */
+@import "@fontsource-variable/bricolage-grotesque/wdth.css";
+@import "@fontsource/jetbrains-mono/400.css";
+@import "@fontsource/jetbrains-mono/500.css";
+
+html[data-design="cinematic"] {
+    --rise: 28px;
+}
+
+html[data-design="cinematic"][data-theme="dark"] {
+    --hero-bg: #0a0b0f;
+    --hero-fg: #f3f1ec;
+    --hero-muted: #a3aab8;
+    --hero-line: rgba(255, 255, 255, 0.12);
+    --field-bg: #12141a;
+    --glass: rgba(255, 255, 255, 0.04);
+}
+
+/* Film grain over everything */
+html[data-design="cinematic"] body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 300;
+    pointer-events: none;
+    opacity: 0.07;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+}
+html[data-design="cinematic"][data-theme="light"] body::after { opacity: 0.05; mix-blend-mode: multiply; }
+
+/* Translucent nav */
+html[data-design="cinematic"] nav {
+    background: color-mix(in srgb, var(--hero-bg) 62%, transparent);
+    backdrop-filter: blur(16px) saturate(1.4);
+    -webkit-backdrop-filter: blur(16px) saturate(1.4);
+}
+
+/* ---------- Hero ---------- */
+
+html[data-design="cinematic"] .hero {
+    isolation: isolate;
+    align-items: center;
+    overflow: hidden;
+    min-height: min(calc(100svh - 92px), 980px);
+    /* Visible if WebGL is unavailable; the canvas paints over it otherwise. */
+    background:
+        radial-gradient(60% 60% at 75% 30%, color-mix(in srgb, var(--color-primary) 35%, transparent), transparent 70%),
+        radial-gradient(50% 50% at 20% 80%, rgba(74, 63, 214, 0.35), transparent 70%),
+        var(--hero-bg);
+}
+
+html[data-design="cinematic"] .hero-canvas {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    display: block;
+    opacity: 0; /* the shader starts after load (see afterLoadWhenIdle in ui.ts) and fades in */
+    transition: opacity 0.9s ease;
+}
+html[data-design="cinematic"] .hero-canvas.ready { opacity: 1; }
+@media (prefers-reduced-motion: reduce) {
+    html[data-design="cinematic"] .hero-canvas { transition: none; }
+}
+
+html[data-design="cinematic"] .hero h1 {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+html[data-design="cinematic"] .hero .greeting {
+    font-family: var(--font-mono);
+    font-size: clamp(13px, 1.2vw, 16px);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+html[data-design="cinematic"] .hero .name {
+    font-size: clamp(52px, 8.6vw, 136px);
+    font-weight: 800;
+    font-variation-settings: "wdth" 78;
+    line-height: 0.92;
+    letter-spacing: -0.03em;
+    text-wrap: balance;
+    background: linear-gradient(100deg, var(--hero-fg) 35%, var(--color-primary) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+html[data-design="cinematic"] .hero .typing { margin-block: 18px clamp(24px, 4vh, 40px); color: var(--hero-fg); font-size: 16px; }
+
+html[data-design="cinematic"] .stack-line { font-size: clamp(22px, 2.5vw, 38px); max-width: 18em; font-weight: 700; }
+html[data-design="cinematic"] .stack-between {
+    margin: 14px 0;
+    padding: 0;
+    border: 0;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    letter-spacing: 0.04em;
+    color: var(--color-primary);
+}
+html[data-design="cinematic"] .stack-between::before { content: "↓ "; }
+
+html[data-design="cinematic"] .hero-cta {
+    border-radius: 999px;
+    padding: 15px 30px;
+    box-shadow: 0 10px 40px -10px color-mix(in srgb, var(--color-primary) 70%, transparent);
+}
+html[data-design="cinematic"] .hero-cta:hover { transform: translateY(-2px); }
+
+html[data-design="cinematic"] .hero-portrait {
+    align-self: center;
+    justify-self: center;
+    width: min(100%, 460px);
+    min-height: 0;
+    aspect-ratio: 4 / 5;
+    margin: 48px clamp(24px, 5vw, 80px) 48px 0;
+    border-radius: 28px;
+    border: 1px solid var(--hero-line);
+    box-shadow:
+        0 40px 100px -30px color-mix(in srgb, var(--color-primary) 55%, transparent),
+        0 0 0 8px var(--glass);
+}
+html[data-design="cinematic"] .hero-portrait img { transform: scale(1.12); }
+
+@media (max-width: 860px) {
+    html[data-design="cinematic"] .hero { min-height: 0; }
+    html[data-design="cinematic"] .hero-portrait {
+        height: auto;
+        width: min(78%, 360px);
+        margin: 0 auto 48px;
+    }
+}
+
+/* ---------- Marquee (structure lives in global.css) ---------- */
+
+html[data-design="cinematic"] .marquee {
+    padding: 22px 0;
+    border-top: 1px solid var(--hero-line);
+    background: var(--hero-bg);
+}
+html[data-design="cinematic"] .marquee-group li {
+    padding-right: 56px;
+    font-size: clamp(32px, 4.6vw, 64px);
+    font-weight: 800;
+    font-variation-settings: "wdth" 78;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    white-space: nowrap;
+    color: transparent;
+    -webkit-text-stroke: 1px var(--hero-muted);
+}
+html[data-design="cinematic"] .marquee-group li::after { content: "✦"; margin-left: 56px; color: var(--color-primary); -webkit-text-stroke: 0; }
+
+@media (prefers-reduced-motion: reduce) {
+    .marquee-track { animation: none; }
+}
+
+/* ---------- Sections ---------- */
+
+html[data-design="cinematic"] .section h2 {
+    font-size: clamp(36px, 5vw, 72px);
+    font-weight: 800;
+    font-variation-settings: "wdth" 78;
+}
+html[data-design="cinematic"] .section h2::after {
+    content: ".";
+    color: var(--color-primary);
+}
+
+html[data-design="cinematic"] .about-text {
+    max-width: 30em;
+    font-size: clamp(22px, 2.4vw, 36px);
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+}
+
+html[data-design="cinematic"] .skill-items li {
+    padding: 4px 12px;
+    border: 1px solid var(--hero-line);
+    border-radius: 999px;
+    background: var(--glass);
+    transition: border-color 0.2s ease, color 0.2s ease;
+}
+html[data-design="cinematic"] .skill-items li:hover { border-color: var(--color-primary); color: var(--hero-fg); }
+html[data-design="cinematic"] .skill-items { gap: 8px; }
+
+html[data-design="cinematic"] .timeline-item { position: relative; }
+html[data-design="cinematic"] .timeline-item h3 { font-family: var(--font-mono); color: var(--color-primary); }
+
+/* ---------- Project cards ---------- */
+
+html[data-design="cinematic"] .projects-grid { display: grid; gap: 24px; }
+
+html[data-design="cinematic"] .project-card {
+    position: relative;
+    overflow: hidden;
+    padding: 20px;
+    border: 1px solid var(--hero-line);
+    border-radius: 22px;
+    background: var(--glass);
+    transition: border-color 0.3s ease, transform 0.3s ease, opacity 0.7s ease;
+}
+html[data-design="cinematic"] .project-card:first-child { padding-top: 20px; border-top: 1px solid var(--hero-line); }
+
+/* Cursor spotlight (--mx/--my are set in cinematic.ts) */
+html[data-design="cinematic"] .project-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), color-mix(in srgb, var(--color-primary) 22%, transparent), transparent 65%);
+}
+html[data-design="cinematic"] .project-card:hover { border-color: color-mix(in srgb, var(--color-primary) 60%, var(--hero-line)); }
+html[data-design="cinematic"] .project-card:hover::before { opacity: 1; }
+
+html[data-design="cinematic"] .project-card > * { position: relative; }
+
+html[data-design="cinematic"] .mockup {
+    border-radius: 12px;
+    transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+    transition: transform 0.25s ease-out;
+    box-shadow: 0 20px 50px -25px rgba(0, 0, 0, 0.6);
+}
+
+html[data-design="cinematic"] .stack-tags li {
+    padding: 3px 10px;
+    border: 1px solid var(--hero-line);
+    border-radius: 999px;
+}
+html[data-design="cinematic"] .stack-tags { gap: 8px; }
+
+html[data-design="cinematic"] .btn { border-radius: 999px; }
+html[data-design="cinematic"] .btn:hover {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+    color: #14161a;
+}
+
+html[data-design="cinematic"] .contact-form input,
+html[data-design="cinematic"] .contact-form textarea { border-radius: 14px; background: var(--glass); }
+html[data-design="cinematic"] .contact-form button { border-radius: 999px; }
+html[data-design="cinematic"] .social-links a { border-radius: 50%; }
+html[data-design="cinematic"] .social-links a:hover { border-color: var(--color-primary); color: var(--color-primary); }

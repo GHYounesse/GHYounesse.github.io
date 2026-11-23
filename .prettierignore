@@ -1,0 +1,15 @@
+# Build output and tooling caches
+dist/
+.test-dist/
+.astro/
+coverage/
+playwright-report/
+test-results/
+.lighthouseci/
+node_modules/
+package-lock.json
+
+# Hand-formatted on purpose: compact one-line rules and long aligned tables
+*.css
+*.astro
+*.md

@@ -1,49 +1,37 @@
 # Younes Ghalloum — Portfolio
 
-Personal portfolio site: about, skills, projects, and contact info, built as a static HTML/CSS/JS site with English/French and light/dark toggles.
+Personal portfolio: about, skills, projects, and contact. Built with [Astro](https://astro.build) as a static site, in English and French.
 
-**Live site:** https://ghyounesse.github.io
+**Live site:** https://younesghalloum.dev
 
 ## Features
 
-- Responsive layout, mobile through desktop
-- English / French language toggle
-- Light / dark theme toggle (respects system preference, remembers your choice)
-- Scroll-reveal animations and a typing effect in the hero
-
-## Tech stack
-
-- HTML5, CSS3 (custom properties, no framework)
-- Vanilla JavaScript (no build step, no dependencies)
-- [Inter](https://fonts.google.com/specimen/Inter) and [JetBrains Mono](https://fonts.google.com/specimen/JetBrains+Mono) via Google Fonts
+- Dark-first design with a WebGL shader hero, smooth scrolling, scroll-driven text, a stack marquee and glass project cards with a cursor spotlight
+- English (`/`) and French (`/fr/`) pages with `hreflang` links
+- Light / dark theme (remembers your choice)
+- Respects `prefers-reduced-motion`; content stays visible if scripts fail
+- The animation code is loaded after the page is idle, so it doesn't block first paint
 
 ## Getting started
 
-No build step — clone and open.
+```bash
+npm install
+npm run dev       # http://localhost:4321
+npm run build     # static output in dist/
+npm run preview
+```
+
+### Checks
 
 ```bash
-git clone https://github.com/GHYounesse/GHYounesse.github.io.git
-cd GHYounesse.github.io
+npm run verify:fast     # lint + type check + unit tests (seconds)
+npm run verify          # + test build, HTML validation, Playwright, Lighthouse, security
+npm run dev:mock        # dev server with a local mock of the contact-form endpoint
 ```
 
-Then either open `index.html` directly in a browser, or serve it locally:
+## Deployment
 
-```bash
-python -m http.server 8000
-```
-
-and visit `http://localhost:8000`.
-
-## Project structure
-
-```
-index.html      Page markup
-styles.css      All styling, incl. light/dark theme tokens
-script.js       Language switch, theme toggle, typing effect, scroll reveal
-logo.png        Site logo / favicon
-pi.jpeg         Hero photo
-*.png           Project screenshots
-```
+Pushes to `main` build the site in GitHub Actions and rsync `dist/` to the VPS (see `.github/workflows/deploy.yml`). Caddy serves it; an example site block is in `deploy/Caddyfile.example`.
 
 ## Contact
 

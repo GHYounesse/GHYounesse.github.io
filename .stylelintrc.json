@@ -1,0 +1,14 @@
+{
+  "extends": ["stylelint-config-recommended"],
+  "rules": {
+    "declaration-block-no-duplicate-properties": [
+      true,
+      { "ignore": ["consecutive-duplicates-with-different-syntaxes"] }
+    ],
+    "unit-no-unknown": true,
+    "color-no-invalid-hex": true,
+    "selector-pseudo-element-no-unknown": true,
+    "no-duplicate-selectors": true,
+    "no-descending-specificity": null
+  }
+}
