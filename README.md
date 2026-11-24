@@ -31,7 +31,7 @@ npm run dev:mock        # dev server with a local mock of the contact-form endpo
 
 ## Deployment
 
-Pushes to `main` build the site in GitHub Actions and rsync `dist/` to the VPS (see `.github/workflows/deploy.yml`). Caddy serves it; an example site block is in `deploy/Caddyfile.example`.
+Pushes to `main` build the site in GitHub Actions and rsync `dist/` to the VPS (see `.github/workflows/deploy.yml`). Nginx serves it and Certbot provides the HTTPS certificate; the Nginx files are in `deploy/nginx.conf.example`. SSH to the VPS uses port 52222.
 
 ## Contact
 
