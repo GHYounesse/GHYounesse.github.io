@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Overview
 
-Personal portfolio for Younes Ghalloum, served at https://younesghalloum.dev from an Ubuntu VPS behind Caddy. It is an Astro static site (no server runtime) with one visual design (dark-first, WebGL hero) and two languages (EN at `/`, FR at `/fr/`).
+Personal portfolio for Younes Ghalloum, served at https://younesghalloum.dev from an Ubuntu VPS behind Nginx (HTTPS from Certbot). It is an Astro static site (no server runtime) with one visual design (dark-first, WebGL hero) and two languages (EN at `/`, FR at `/fr/`).
 
 ## Commands
 
@@ -25,7 +25,7 @@ Personal portfolio for Younes Ghalloum, served at https://younesghalloum.dev fro
 | HTML | `npm run lint:html` | html-validate on both built pages |
 | Integration | `npm run test:integration [-- --workers=2]` | Playwright in `tests/integration` against `.test-dist` and the mock service. Runs with `prefers-reduced-motion` on (headless Chrome paints WebGL/CSS animation on the CPU and lags laptops); `motion.spec.ts` turns motion back on for the animated paths, and `PW_MOTION=1` enables it everywhere. 1 worker by default |
 | Performance | `npm run test:perf [-- --budgets]` | gzip/image budgets in `tests/perf` (budgets sit ~25% above measured values), then Lighthouse (`.lighthouserc.cjs`; forced reduced motion, 5 min hard timeout) |
-| Security | `npm run test:security` | `npm audit`, secretlint on tracked and uncommitted files, `tests/security` checks on the built HTML/JS, Caddyfile and deploy workflow |
+| Security | `npm run test:security` | `npm audit`, secretlint on tracked and uncommitted files, `tests/security` checks on the built HTML/JS, the Nginx example and the deploy workflow |
 
 Mock services live in `mocks/`: `formspree-server.mjs` (the contact endpoint) and `static-server.mjs` (serves the test build for Playwright). Tests that post to the mock tag each submission with a unique token and must not clear shared state. Hooks are opt-in: `npm run hooks:install` (pre-commit lint-staged, pre-push `verify:fast`).
 
@@ -55,4 +55,4 @@ The other three designs (editorial, brutalist, terminal) and the switch were rem
 
 ## Deployment
 
-Push to `main` runs [.github/workflows/deploy.yml](.github/workflows/deploy.yml): `npm ci`, build, then `rsync --delete dist/` to `/var/www/younesghalloum.dev/` on the VPS. It needs the repo secrets `VPS_HOST`, `VPS_USER`, `VPS_SSH_KEY`. The VPS hosts other projects too, so Caddy has one site block per domain; [deploy/Caddyfile.example](deploy/Caddyfile.example) is the block for this site (long-cache for `/_astro/*`, `no-cache` for HTML, www redirect).
+Push to `main` runs [.github/workflows/deploy.yml](.github/workflows/deploy.yml): `npm ci`, build, then `rsync --delete dist/` to `/var/www/younesghalloum.dev/` on the VPS. It connects on SSH port 52222 (written into `~/.ssh/config` on the runner; `ssh-keyscan` needs `-p 52222`) and needs the repo secrets `VPS_HOST`, `VPS_USER` (the restricted `portfolio` user), `VPS_SSH_KEY` (its own key, not shared with other projects). The VPS hosts other projects too, so Nginx has one file per domain; [deploy/nginx.conf.example](deploy/nginx.conf.example) is the one for this site (long-cache for `/_astro/*`, `no-cache` for HTML, www redirect, shared security-headers snippet). Certbot adds the HTTPS part.

@@ -23,27 +23,34 @@ describe("secrets hygiene", () => {
   });
 });
 
-describe("Caddy configuration", () => {
-  const caddy = read("deploy/Caddyfile.example");
+describe("Nginx configuration", () => {
+  const nginx = read("deploy/nginx.conf.example");
 
   it("sets the baseline security headers", () => {
-    expect(caddy).toMatch(/X-Content-Type-Options\s+nosniff/);
-    expect(caddy).toMatch(/Referrer-Policy\s+strict-origin-when-cross-origin/);
-    expect(caddy).toMatch(/X-Frame-Options\s+DENY/);
+    expect(nginx).toMatch(/add_header X-Content-Type-Options "nosniff" always;/);
+    expect(nginx).toMatch(/add_header Referrer-Policy "strict-origin-when-cross-origin" always;/);
+    expect(nginx).toMatch(/add_header X-Frame-Options "DENY" always;/);
+  });
+
+  it("includes the headers in every location that sets its own add_header", () => {
+    const locations = [...nginx.matchAll(/location [^{]*\{([^}]*)\}/g)].map((match) => match[1]);
+    for (const body of locations.filter((text) => text.includes("add_header"))) {
+      expect(body).toMatch(/include snippets\/security-headers\.conf;/);
+    }
   });
 
   it("caches hashed assets forever but makes HTML revalidate", () => {
-    expect(caddy).toMatch(/\/_astro\/\*/);
-    expect(caddy).toMatch(/immutable/);
-    expect(caddy).toMatch(/no-cache/);
+    expect(nginx).toMatch(/location \/_astro\//);
+    expect(nginx).toMatch(/immutable/);
+    expect(nginx).toMatch(/no-cache/);
   });
 
   it("does not expose a directory listing", () => {
-    expect(caddy).not.toMatch(/file_server\s+browse|file_browse/);
+    expect(nginx).not.toMatch(/autoindex\s+on/);
   });
 
   it("redirects www to the apex domain", () => {
-    expect(caddy).toMatch(/redir @www https:\/\/younesghalloum\.dev/);
+    expect(nginx).toMatch(/return 301 https:\/\/younesghalloum\.dev\$request_uri;/);
   });
 });
 

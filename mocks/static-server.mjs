@@ -1,5 +1,5 @@
 // Minimal static file server for a built site: `node mocks/static-server.mjs <dir> <port>`.
-// Mirrors how Caddy serves the site (directory index, no SPA fallback) without needing Caddy locally.
+// Mirrors how Nginx serves the site (directory index, no SPA fallback) without needing Nginx locally.
 import { createServer } from "node:http";
 import { readFile, stat } from "node:fs/promises";
 import path from "node:path";
