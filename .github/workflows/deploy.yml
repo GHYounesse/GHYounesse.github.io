@@ -36,6 +36,10 @@ jobs:
           install -m 700 -d ~/.ssh
           printf '%s\n' "$VPS_SSH_KEY" > ~/.ssh/deploy_key
           chmod 600 ~/.ssh/deploy_key
-          ssh-keyscan -H "$VPS_HOST" >> ~/.ssh/known_hosts
+          # The VPS accepts SSH on port 52222 (port 22 gets closed). ssh and rsync read the port from this config,
+          # and ssh-keyscan needs it too, otherwise the host key check fails.
+          printf 'Host %s\n  Port 52222\n' "$VPS_HOST" > ~/.ssh/config
+          chmod 600 ~/.ssh/config
+          ssh-keyscan -H -p 52222 "$VPS_HOST" >> ~/.ssh/known_hosts
           rsync -az --delete -e "ssh -i ~/.ssh/deploy_key" \
             dist/ "$VPS_USER@$VPS_HOST:/var/www/younesghalloum.dev/"
