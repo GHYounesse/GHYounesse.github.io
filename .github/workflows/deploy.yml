@@ -3,6 +3,9 @@ name: Deploy to VPS
 on:
   push:
     branches: [main]
+  # Pull requests only run the checks job: they never get the SSH secrets.
+  pull_request:
+    branches: [main]
   workflow_dispatch:
 
 # The deploy uses an SSH key from secrets, so the GitHub token itself only needs to read the repo.
@@ -14,7 +17,26 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  # Same fast checks as locally: lint, types, unit tests, then the security tests on a test build.
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+      - run: npm run verify:fast
+      - run: npm run build:test
+      - run: npm run test:security
+
   deploy:
+    # A failing check blocks the deploy; pull requests never deploy.
+    needs: checks
+    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

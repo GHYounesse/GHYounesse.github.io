@@ -13,3 +13,6 @@ package-lock.json
 *.css
 *.astro
 *.md
+
+# Old pre-Astro page kept at the repo root, not part of the build
+/index.html
