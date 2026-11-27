@@ -5,6 +5,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { initHeroShader } from "./hero-shader";
 import { initHeroParticles } from "./hero-particles";
+import { initSlideshow } from "./slideshow";
 import { splitWords } from "./words";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -13,11 +14,24 @@ const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").match
 const canHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
 
 const canvas = document.querySelector<HTMLCanvasElement>(".hero-canvas");
-if (canvas) initHeroShader(canvas, { animate: !reduceMotion });
+const slides = document.documentElement.classList.contains("slides");
+
+// In the slideshow the shader sits behind every slide, so it moves out of the hero into a fixed stage layer.
+if (slides && canvas) {
+  const stage = document.createElement("div");
+  stage.className = "stage-bg";
+  stage.setAttribute("aria-hidden", "true");
+  document.body.prepend(stage);
+  stage.append(canvas);
+}
+
+const shader = canvas ? initHeroShader(canvas, { animate: !reduceMotion }) : undefined;
 // Interactive particle layer: pointer-driven, so only with motion allowed and a fine pointer.
 if (canvas && canHover && !reduceMotion) initHeroParticles(canvas.parentElement as HTMLElement);
 
-if (!reduceMotion) {
+if (slides) {
+  initSlideshow({ shiftBackground: (value) => shader?.setOffset(value) });
+} else if (!reduceMotion) {
   // Smooth scroll, driven by GSAP's ticker so ScrollTrigger stays in sync.
   const lenis = new Lenis({ anchors: true });
   lenis.on("scroll", ScrollTrigger.update);
