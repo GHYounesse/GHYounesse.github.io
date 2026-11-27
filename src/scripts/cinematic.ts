@@ -33,6 +33,20 @@ if (!reduceMotion) {
     });
   }
 
+  // Project screenshots: each one opens up from a framed crop as its card scrolls into view.
+  document.querySelectorAll<HTMLElement>(".project-card .mockup > img").forEach((img) => {
+    gsap.fromTo(
+      img,
+      { scale: 1.2, clipPath: "inset(14% 10% 14% 10% round 16px)" },
+      {
+        scale: 1,
+        clipPath: "inset(0% 0% 0% 0% round 0px)",
+        ease: "none",
+        scrollTrigger: { trigger: img, start: "top 95%", end: "top 50%", scrub: true },
+      },
+    );
+  });
+
   // About text: words light up as you scroll through the paragraph.
   document.querySelectorAll<HTMLElement>("[data-words]").forEach((p) => {
     const text = p.textContent ?? "";
