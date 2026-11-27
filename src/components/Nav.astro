@@ -19,6 +19,10 @@ const lang = c.lang;
     <ul>
       <li><a href="#contact">{c.nav.contact}</a></li>
     </ul>
+    <button type="button" class="view-toggle" data-view-toggle>
+      <span class="to-scroll">{c.nav.scrollView}</span>
+      <span class="to-slides">{c.nav.slideView}</span>
+    </button>
     <div class="lang-switch">
       <a href="/" hreflang="en" lang="en" class="lang-option" aria-current={lang === "en" ? "true" : undefined}>EN</a>
       <span class="lang-switch-divider" aria-hidden="true">/</span>

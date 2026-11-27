@@ -149,6 +149,24 @@ nav ul li a:hover::after { width: 100%; }
 
 .nav-right { display: flex; align-items: center; gap: 28px; }
 
+/* Slide/scroll view switch: only offered where the slideshow is possible (set before paint in Base.astro). */
+.view-toggle {
+    padding: 6px 14px;
+    border: 1px solid var(--hero-line);
+    border-radius: 999px;
+    background: none;
+    color: var(--hero-muted);
+    font: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: color 0.2s ease, border-color 0.2s ease;
+}
+.view-toggle:hover { color: var(--hero-fg); border-color: var(--color-primary); }
+html:not(.slides-capable) .view-toggle { display: none; }
+html.slides .view-toggle .to-slides,
+html:not(.slides) .view-toggle .to-scroll { display: none; }
+
 .lang-switch {
     display: flex;
     align-items: center;
