@@ -11,6 +11,8 @@ export interface Content {
     title: string;
     text: string;
     cta: string;
+    live: string;
+    liveSoon: string;
     prev: string;
     next: string;
     items: { id: string; name: string; desc: string }[];

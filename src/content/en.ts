@@ -52,7 +52,9 @@ export const en: Content = {
   projects: {
     title: "Projects",
     text: "Here are some of the projects I've worked on:",
-    cta: "View project",
+    cta: "GitHub",
+    live: "Live demo",
+    liveSoon: "Not hosted yet",
     prev: "Previous project",
     next: "Next project",
     items: [

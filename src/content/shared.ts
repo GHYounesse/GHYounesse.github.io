@@ -72,7 +72,10 @@ export type SkillId = (typeof skillGroups)[number]["id"];
 interface ProjectMeta {
   /** Screenshot. Leave undefined to render a typographic placeholder tile instead. */
   image?: ImageMetadata;
+  /** Source code (GitHub). */
   href: string;
+  /** Hosted version. Leave undefined while a project is not deployed: its button renders disabled. */
+  liveUrl?: string;
   stack: string[];
 }
 
@@ -87,6 +90,7 @@ export const projectMeta: Record<string, ProjectMeta> = {
   baskit: {
     image: baskit,
     href: "https://github.com/GHYounesse/baskit",
+    liveUrl: "https://shop.younesghalloum.dev",
     stack: ["Laravel", "React", "Inertia.js", "Stripe"],
   },
   hubly: {
