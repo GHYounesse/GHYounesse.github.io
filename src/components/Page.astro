@@ -15,7 +15,7 @@ const path = content.lang === "fr" ? "/fr/" : "/";
 
 <Base content={content} path={path}>
   <Nav c={content} />
-  <main id="main">
+  <main id="main" data-home={content.nav.home} data-sections={content.nav.slides}>
     <Hero c={content} />
     <Marquee />
     <Sections c={content} />
