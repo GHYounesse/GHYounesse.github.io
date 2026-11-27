@@ -19,6 +19,19 @@ document.querySelectorAll<HTMLButtonElement>("[data-theme-toggle]").forEach((btn
   });
 });
 
+// ---- Slide / scroll view toggle (the layout is chosen before first paint, so switching reloads the page) ----
+document.querySelectorAll<HTMLButtonElement>("[data-view-toggle]").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    const next = root.classList.contains("slides") ? "scroll" : "slides";
+    try {
+      localStorage.setItem("view", next);
+    } catch {
+      /* storage unavailable: the choice just won't persist */
+    }
+    location.reload();
+  });
+});
+
 // ---- Reveal on scroll (CSS handles the transition; see global.css) ----
 const revealEls = document.querySelectorAll<HTMLElement>("[data-reveal]");
 if (reduceMotion || !("IntersectionObserver" in window)) {
