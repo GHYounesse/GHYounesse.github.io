@@ -1,5 +1,6 @@
 import { Renderer, Program, Mesh, Geometry } from "ogl";
 import { vertex, fragment } from "./hero-particles-shaders";
+import { isSoftwareRenderer, rendererName } from "./gpu";
 import { hexToRgb, palettes, themeFromAttribute } from "./shader-palette";
 
 export function initHeroParticles(hero: HTMLElement) {
@@ -19,6 +20,11 @@ export function initHeroParticles(hero: HTMLElement) {
     return;
   }
   const gl = renderer.gl;
+  if (isSoftwareRenderer(rendererName(gl))) {
+    // No real GPU: thousands of blended points would starve the main thread, so skip the layer.
+    canvas.remove();
+    return;
+  }
   gl.clearColor(0, 0, 0, 0);
 
   const count = window.innerWidth < 1100 ? 1400 : 3200;
