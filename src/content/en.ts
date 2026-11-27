@@ -7,7 +7,7 @@ export const en: Content = {
     description:
       "Full-stack developer working with Laravel, Symfony, NestJS and Spring Boot on the back end, and React and Angular on the front end.",
   },
-  nav: { contact: "Contact me", skip: "Skip to content" },
+  nav: { contact: "Contact me", skip: "Skip to content", home: "Intro", slides: "Sections" },
   hero: {
     greeting: "Hi, I'm",
     name: "Younes Ghalloum",
@@ -38,6 +38,8 @@ export const en: Content = {
     title: "Projects",
     text: "Here are some of the projects I've worked on:",
     cta: "View project",
+    prev: "Previous project",
+    next: "Next project",
     items: [
       {
         id: "leaksight",
