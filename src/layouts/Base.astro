@@ -51,11 +51,19 @@ const ogImage = new URL("/og.png", SITE.url).href;
         root.classList.add("js");
         // Desktop with a mouse and motion allowed gets the slideshow layout. Everyone else keeps the scrolling page.
         // The class is removed again if the animation code fails to load (see ui.ts), so content is never stuck hidden.
+        // Visitors can switch to the scrolling page with the nav toggle; the choice is saved in localStorage.
+        let view = null;
+        try {
+          view = localStorage.getItem("view");
+        } catch {
+          // Same as above: no storage just means the choice is not remembered.
+        }
         if (
           matchMedia("(min-width: 1024px) and (min-height: 640px) and (hover: hover) and (pointer: fine)").matches &&
           !matchMedia("(prefers-reduced-motion: reduce)").matches
         ) {
-          root.classList.add("slides");
+          root.classList.add("slides-capable");
+          if (view !== "scroll") root.classList.add("slides");
         }
       })();
     </script>
