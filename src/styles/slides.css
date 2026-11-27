@@ -45,3 +45,59 @@ html.js.slides main > section.is-leaving { visibility: visible; }
 
 /* Reveal-on-scroll has no meaning here: slides animate in through the controller instead. */
 html.js.slides [data-reveal] { opacity: 1; transform: none; transition: none; }
+
+/* Intro slide: transparent over the shader, with the ticker docked at the bottom. */
+/* The ticker is a real grid row under the copy and portrait, so nothing can ever sit on top of it. The big
+   type scales with the window height as well as the width, so the intro always fits above the ticker. */
+html.js.slides .hero {
+    grid-template-rows: minmax(0, 1fr) auto;
+    padding-right: 0; /* the ticker runs edge to edge; the copy and portrait keep their own spacing */
+    background: none;
+}
+html.js.slides .hero-copy {
+    grid-column: 1;
+    grid-row: 1;
+    min-height: 0;
+    padding-top: 16px;
+    padding-bottom: 16px;
+}
+html.js.slides .hero .name { font-size: clamp(44px, min(8.6vw, 13.5vh), 136px); }
+html.js.slides .stack-line { font-size: clamp(20px, min(2.5vw, 3.8vh), 38px); }
+html.js.slides .hero .typing { margin-block: 10px clamp(12px, 2.5vh, 40px); }
+html.js.slides .hero-cta { margin-top: clamp(16px, 3vh, 44px); }
+html.js.slides main > .marquee { display: none; }
+html.js.slides .hero > .marquee {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    z-index: 1;
+    padding: 12px 0;
+    border-top: 1px solid var(--hero-line);
+    background: color-mix(in srgb, var(--hero-bg) 55%, transparent);
+}
+html.js.slides .hero > .marquee .marquee-group li { font-size: clamp(22px, 2.6vw, 38px); }
+html.js.slides .hero-portrait {
+    grid-column: 2;
+    grid-row: 1;
+    height: 100%;
+    width: auto;
+    max-width: 100%;
+    margin-top: 0;
+}
+
+/* Content slides: centred in the stage instead of stacked down a page. */
+html.js.slides main > .section {
+    grid-template-rows: 1fr auto auto auto 1fr;
+    align-items: start;
+    padding-top: clamp(20px, 4vh, 56px);
+    padding-bottom: clamp(20px, 4vh, 56px);
+}
+/* Heading block and content block are both centred vertically (spacer rows above and below). */
+html.js.slides .section h2 { grid-row: 2; }
+html.js.slides .section .lead { grid-row: 3; }
+html.js.slides .section .project-pager,
+html.js.slides .contact .contact-actions { grid-column: 1; grid-row: 4; }
+html.js.slides .section .section-body,
+html.js.slides .contact .contact-form {
+    grid-row: 1 / -1;
+    align-self: center;
+}
