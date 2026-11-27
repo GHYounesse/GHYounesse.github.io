@@ -7,7 +7,14 @@ export const en: Content = {
     description:
       "Full-stack developer working with Laravel, Symfony, NestJS and Spring Boot on the back end, and React and Angular on the front end.",
   },
-  nav: { contact: "Contact me", skip: "Skip to content", home: "Intro", slides: "Sections" },
+  nav: {
+    contact: "Contact me",
+    skip: "Skip to content",
+    home: "Intro",
+    slides: "Sections",
+    scrollView: "Scroll view",
+    slideView: "Slide view",
+  },
   hero: {
     greeting: "Hi, I'm",
     name: "Younes Ghalloum",

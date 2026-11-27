@@ -3,7 +3,7 @@ import type { SkillId } from "./shared";
 export interface Content {
   lang: "en" | "fr";
   meta: { title: string; description: string };
-  nav: { contact: string; skip: string; home: string; slides: string };
+  nav: { contact: string; skip: string; home: string; slides: string; scrollView: string; slideView: string };
   hero: { greeting: string; name: string; titles: string[]; ui: string; between: string; api: string; cta: string };
   about: { title: string; text: string; tiles: { title: string; text: string }[] };
   skills: { title: string; text: string; labels: Record<SkillId, string>; languages: string[] };
