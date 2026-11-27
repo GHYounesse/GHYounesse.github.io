@@ -1,0 +1,47 @@
+/* ==========================================================================
+   Slideshow layout (desktop). `html.slides` is set before first paint by the inline script in Base.astro and
+   removed again if the animation code fails to load, so none of this can leave the page stuck. `slides-live` is
+   added by slideshow.ts once it controls navigation.
+   ========================================================================== */
+
+html.js.slides,
+html.js.slides body {
+    height: 100svh;
+    overflow: hidden;
+    scroll-behavior: auto;
+}
+
+/* The WebGL background lives in one fixed layer behind every slide (slideshow.ts moves the canvases here). */
+html.js.slides .stage-bg {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+}
+
+html.js.slides main {
+    position: relative;
+    height: calc(100svh - var(--nav-h, 92px));
+    overflow: hidden;
+}
+
+/* Every section becomes a full-stage slide. Only the active one (and the two taking part in a transition) shows. */
+html.js.slides main > section {
+    position: absolute;
+    inset: 0;
+    min-height: 0;
+    visibility: hidden;
+    overflow: hidden auto;
+    scrollbar-width: none;
+    padding-right: calc(var(--pad-x) + 28px); /* room for the dots on the right */
+    border-top: 0;
+    background: color-mix(in srgb, var(--hero-bg) 68%, transparent);
+}
+html.js.slides main > section::-webkit-scrollbar { display: none; }
+html.js.slides:not(.slides-live) main > #top,
+html.js.slides main > section.is-active,
+html.js.slides main > section.is-entering,
+html.js.slides main > section.is-leaving { visibility: visible; }
+
+/* Reveal-on-scroll has no meaning here: slides animate in through the controller instead. */
+html.js.slides [data-reveal] { opacity: 1; transform: none; transition: none; }
