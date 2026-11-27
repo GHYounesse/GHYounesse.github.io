@@ -60,6 +60,19 @@ test("projects step one at a time before the slideshow moves on", async ({ page 
   await expect(counter).toHaveText("01 / 07");
 });
 
+test("the nav toggle switches to the scrolling page, remembers it, and switches back", async ({ page }) => {
+  await open(page);
+  await page.getByRole("button", { name: "Scroll view" }).click();
+  await expect(page.locator("html.slides")).toHaveCount(0, wait);
+  expect(await page.evaluate(() => localStorage.getItem("view"))).toBe("scroll");
+
+  await page.reload();
+  await expect(page.locator("html.slides")).toHaveCount(0);
+  await page.getByRole("button", { name: "Slide view" }).click();
+  await expect(page.locator("html.slides-live")).toHaveCount(1, wait);
+  expect(await page.evaluate(() => localStorage.getItem("view"))).toBe("slides");
+});
+
 test("a deep link opens the matching slide", async ({ page }) => {
   await open(page, "/#skills");
   await expect(page.locator("main > section.is-active")).toHaveAttribute("id", "skills");
@@ -79,6 +92,7 @@ test.describe("fallbacks", () => {
     await page.goto("/");
     await expect(page.locator("html")).not.toHaveClass(/\bslides\b/);
     await expect(page.locator(".slide-nav")).toHaveCount(0);
+    await expect(page.locator(".view-toggle")).toBeHidden(); // nothing to switch to on a narrow window
     await expect(page.locator("#contact")).toBeAttached();
   });
 
@@ -87,6 +101,7 @@ test.describe("fallbacks", () => {
     test("the page scrolls normally", async ({ page }) => {
       await page.goto("/");
       await expect(page.locator("html")).not.toHaveClass(/\bslides\b/);
+      await expect(page.locator(".view-toggle")).toBeHidden();
       await page.locator("#contact").scrollIntoViewIfNeeded();
       await expect(page.locator("#contact")).toBeInViewport();
     });
