@@ -22,6 +22,7 @@ const fragment = /* glsl */ `
   uniform vec3 uA;
   uniform vec3 uB;
   uniform float uStrength;
+  uniform float uOffset;
 
   float hash(vec2 p) {
     p = fract(p * vec2(123.34, 456.21));
@@ -44,6 +45,7 @@ const fragment = /* glsl */ `
   void main() {
     float aspect = uRes.x / uRes.y;
     vec2 p = (vUv - 0.5) * vec2(aspect, 1.0) * 2.2;
+    p += vec2(uOffset, uOffset * 0.35); // the slideshow drifts the noise field sideways per slide
     vec2 m = (uMouse - 0.5) * vec2(aspect, 1.0) * 2.2;
     float t = uTime * 0.08;
 
@@ -63,7 +65,14 @@ const fragment = /* glsl */ `
   }
 `;
 
-export function initHeroShader(canvas: HTMLCanvasElement, opts: { animate: boolean }) {
+/** Handle returned to callers that want to steer the background (the slideshow). */
+export interface HeroShader {
+  /** Shifts the noise field; animated by the caller. */
+  setOffset(value: number): void;
+}
+
+export function initHeroShader(canvas: HTMLCanvasElement, opts: { animate: boolean }): HeroShader {
+  const none: HeroShader = { setOffset() {} };
   const hero = canvas.parentElement as HTMLElement;
   const root = document.documentElement;
 
@@ -78,7 +87,7 @@ export function initHeroShader(canvas: HTMLCanvasElement, opts: { animate: boole
   } catch {
     // No WebGL: the CSS gradient fallback on .hero stays visible.
     canvas.remove();
-    return;
+    return none;
   }
 
   const gl = renderer.gl;
@@ -93,6 +102,7 @@ export function initHeroShader(canvas: HTMLCanvasElement, opts: { animate: boole
       uA: { value: [0, 0, 0] },
       uB: { value: [0, 0, 0] },
       uStrength: { value: 1 },
+      uOffset: { value: 0 },
     },
   });
   const mesh = new Mesh(gl, { geometry: new Triangle(gl), program });
@@ -128,7 +138,13 @@ export function initHeroShader(canvas: HTMLCanvasElement, opts: { animate: boole
     if (!opts.animate) draw(0);
   }).observe(root, { attributes: true, attributeFilter: ["data-theme"] });
 
-  if (!opts.animate) return;
+  const shader: HeroShader = {
+    setOffset(value) {
+      program.uniforms.uOffset.value = value;
+      if (!opts.animate) draw(0);
+    },
+  };
+  if (!opts.animate) return shader;
 
   // Cursor glow, eased toward the pointer.
   const target = [0.7, 0.5];
@@ -158,4 +174,5 @@ export function initHeroShader(canvas: HTMLCanvasElement, opts: { animate: boole
     draw(ms * 0.001);
   };
   requestAnimationFrame(loop);
+  return shader;
 }
