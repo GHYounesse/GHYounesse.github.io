@@ -5,7 +5,7 @@ export interface Content {
   meta: { title: string; description: string };
   nav: { contact: string; skip: string; home: string; slides: string };
   hero: { greeting: string; name: string; titles: string[]; ui: string; between: string; api: string; cta: string };
-  about: { title: string; text: string };
+  about: { title: string; text: string; tiles: { title: string; text: string }[] };
   skills: { title: string; text: string; labels: Record<SkillId, string>; languages: string[] };
   projects: {
     title: string;

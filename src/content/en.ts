@@ -19,7 +19,15 @@ export const en: Content = {
   },
   about: {
     title: "About Me",
-    text: "I work across the stack: Laravel, Symfony and NestJS on one side, Java with Spring Boot on the other, and React or Angular on the front end. Over three roles I've worked on a real-time bus-tracking app at CTM, a cybersecurity platform at Hisneo, and recruitment, HR and NGO tools with LLM features at ADITYA. Outside of work I build personal projects, from a Stripe e-commerce site to a microservices banking platform, to keep learning.",
+    text: "I build full-stack products from the database to the interface, and I keep learning by shipping real ones.",
+    tiles: [
+      { title: "Backend", text: "Laravel, Symfony and NestJS on one side, Java with Spring Boot on the other." },
+      { title: "Frontend", text: "React and Angular interfaces, from dashboards to real-time apps." },
+      {
+        title: "Beyond work",
+        text: "Personal projects, from a Stripe e-commerce site to a microservices banking platform.",
+      },
+    ],
   },
   skills: {
     title: "My Skills",

@@ -19,7 +19,15 @@ export const fr: Content = {
   },
   about: {
     title: "À propos de moi",
-    text: "Je travaille sur l'ensemble de la pile technique : Laravel, Symfony et NestJS d'un côté, Java avec Spring Boot de l'autre, et React ou Angular côté interface. En trois postes, j'ai travaillé sur une application de suivi de bus en temps réel chez CTM, une plateforme de cybersécurité chez Hisneo, puis des outils de recrutement, de RH et de gestion d'ONG avec des fonctionnalités LLM chez ADITYA. En dehors du travail, je construis mes propres projets, d'un site e-commerce Stripe à une plateforme bancaire en microservices, pour continuer à apprendre.",
+    text: "Je construis des produits full-stack, de la base de données à l'interface, et je continue d'apprendre en livrant de vrais projets.",
+    tiles: [
+      { title: "Backend", text: "Laravel, Symfony et NestJS d'un côté, Java avec Spring Boot de l'autre." },
+      { title: "Frontend", text: "Interfaces React et Angular, des tableaux de bord aux applications temps réel." },
+      {
+        title: "Hors du travail",
+        text: "Projets personnels, d'un site e-commerce Stripe à une plateforme bancaire en microservices.",
+      },
+    ],
   },
   skills: {
     title: "Mes Compétences",

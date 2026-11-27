@@ -195,6 +195,12 @@ html[data-design="cinematic"] .about-text {
     letter-spacing: -0.01em;
 }
 
+html[data-design="cinematic"] .about-tiles li {
+    border-radius: 18px;
+    background: var(--glass);
+}
+html[data-design="cinematic"] .about-tiles h3 { font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase; }
+
 html[data-design="cinematic"] .skill-items li {
     padding: 4px 12px;
     border: 1px solid var(--hero-line);

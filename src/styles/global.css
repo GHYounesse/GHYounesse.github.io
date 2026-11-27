@@ -333,6 +333,21 @@ html[data-theme="dark"] .icon-moon { display: none; }
     color: var(--hero-muted);
 }
 
+.about-tiles {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+    margin: 32px 0 0;
+    padding: 0;
+    list-style: none;
+}
+.about-tiles li { padding: 20px; border: 1px solid var(--hero-line); border-radius: 6px; }
+.about-tiles h3 { margin: 0 0 8px; font-size: 15px; font-weight: 700; color: var(--color-primary); }
+.about-tiles p { margin: 0; font-size: 15px; line-height: 1.5; color: var(--hero-muted); }
+@media (max-width: 700px) {
+    .about-tiles { grid-template-columns: 1fr; }
+}
+
 .about-text {
     margin: 0;
     max-width: 38em;

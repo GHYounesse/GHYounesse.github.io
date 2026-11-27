@@ -23,6 +23,14 @@ const icons: Record<SkillId, string> = {
   <h2>{c.about.title}</h2>
   <div class="section-body">
     <p class="about-text" data-words>{c.about.text}</p>
+    <ul class="about-tiles">
+      {c.about.tiles.map((t) => (
+        <li>
+          <h3>{t.title}</h3>
+          <p>{t.text}</p>
+        </li>
+      ))}
+    </ul>
   </div>
 </section>
 
