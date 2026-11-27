@@ -4,6 +4,7 @@ import "lenis/dist/lenis.css";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { initHeroShader } from "./hero-shader";
+import { initHeroParticles } from "./hero-particles";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -12,6 +13,8 @@ const canHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches
 
 const canvas = document.querySelector<HTMLCanvasElement>(".hero-canvas");
 if (canvas) initHeroShader(canvas, { animate: !reduceMotion });
+// Interactive particle layer: pointer-driven, so only with motion allowed and a fine pointer.
+if (canvas && canHover && !reduceMotion) initHeroParticles(canvas.parentElement as HTMLElement);
 
 if (!reduceMotion) {
   // Smooth scroll, driven by GSAP's ticker so ScrollTrigger stays in sync.
