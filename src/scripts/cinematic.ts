@@ -5,6 +5,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { initHeroShader } from "./hero-shader";
 import { initHeroParticles } from "./hero-particles";
+import { splitWords } from "./words";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -49,20 +50,7 @@ if (!reduceMotion) {
 
   // About text: words light up as you scroll through the paragraph.
   document.querySelectorAll<HTMLElement>("[data-words]").forEach((p) => {
-    const text = p.textContent ?? "";
-    p.setAttribute("aria-label", text);
-    p.textContent = "";
-    const words = text
-      .split(/\s+/)
-      .filter(Boolean)
-      .map((word) => {
-        const span = document.createElement("span");
-        span.className = "word";
-        span.setAttribute("aria-hidden", "true");
-        span.textContent = word + " ";
-        p.appendChild(span);
-        return span;
-      });
+    const words = splitWords(p);
     gsap.fromTo(
       words,
       { opacity: 0.16 },
