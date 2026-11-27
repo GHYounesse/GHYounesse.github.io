@@ -2,7 +2,8 @@ import { expect, test } from "@playwright/test";
 
 // The rest of the suite runs with reduced motion (see playwright.config.ts) to stay light. These few tests turn
 // motion back on to cover the animated code paths. Keep them short: each one repaints on the CPU in headless Chrome.
-test.use({ reducedMotion: "no-preference" });
+// Below 1024px wide the site keeps its scrolling layout (the slideshow is desktop-only), which is what these cover.
+test.use({ reducedMotion: "no-preference", viewport: { width: 900, height: 800 } });
 
 // Stop the animated page from rendering before the browser context is torn down. Without a GPU the animations keep
 // the CPU busy, and closing a busy context can exceed the test timeout.
