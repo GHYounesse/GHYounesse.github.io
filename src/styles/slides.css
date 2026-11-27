@@ -101,3 +101,74 @@ html.js.slides .contact .contact-form {
     grid-row: 1 / -1;
     align-self: center;
 }
+/* Tighter rows so the six skill groups fit one screen. */
+html.js.slides .skill-row { padding: 9px 0; }
+html.js.slides .skill-items { gap: 5px 8px; }
+html.js.slides .skill-items li { padding: 2px 10px; }
+
+/* Journey: heading on top, the six entries in two columns with the period above each text. */
+html.js.slides main > .timeline {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+    align-content: center;
+    row-gap: 20px;
+}
+html.js.slides .section.timeline h2 { grid-row: 1; }
+html.js.slides .section.timeline .section-body {
+    grid-column: 1;
+    grid-row: 2;
+    align-self: start;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: clamp(24px, 4vw, 64px);
+}
+html.js.slides .timeline-item { grid-template-columns: 1fr; align-content: start; gap: 4px; padding: 12px 0; }
+html.js.slides .timeline-item p { font-size: 15px; line-height: 1.5; }
+
+/* Projects: one card at a time, all stacked in the same grid cell. */
+html.js.slides .projects-grid { display: grid; }
+html.js.slides .project-card {
+    grid-area: 1 / 1;
+    visibility: hidden;
+    pointer-events: none;
+}
+html.js.slides .project-card.is-current {
+    visibility: inherit; /* not "visible": that would show the card even while its slide is hidden */
+    pointer-events: auto;
+}
+
+/* Cards fill the shared cell: the screenshot grows to the card's height and the button sits at the bottom,
+   so the shorter cards have no dead space under them. */
+@media (min-width: 1100px) {
+    html.js.slides .project-card { align-items: stretch; }
+    html.js.slides .project-card .mockup { align-self: stretch; height: 100%; min-height: 220px; aspect-ratio: auto; }
+    html.js.slides .project-card .mockup img { object-position: left top; } /* keep the app header recognisable in the taller crop */
+}
+html.js.slides .project-details { display: flex; flex-direction: column; }
+html.js.slides .project-details .stack-tags { margin-bottom: 18px; }
+html.js.slides .project-details .btn { align-self: flex-start; margin-top: auto; }
+
+.project-pager {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-top: 28px;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--hero-muted);
+}
+.project-pager button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border: 1px solid var(--hero-line);
+    border-radius: 50%;
+    background: var(--glass);
+    color: var(--hero-fg);
+    font-size: 18px;
+    cursor: pointer;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+.project-pager button:hover { border-color: var(--color-primary); }
