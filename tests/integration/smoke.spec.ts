@@ -35,6 +35,19 @@ test("loads every project screenshot and gives the others a placeholder tile", a
   await expect(page.locator(".mockup-ph")).toHaveCount(7 - count);
 });
 
+test("every project links to GitHub, and only Baskit has a hosted version", async ({ page }) => {
+  await page.goto("/");
+  await expect(page.locator(".project-actions a[href*='github.com']")).toHaveCount(7);
+  const live = page.locator(".project-actions a[href^='https://shop.younesghalloum.dev']");
+  await expect(live).toHaveCount(1);
+  await expect(live).toHaveText(/Live demo/);
+  // The other six show the same button, disabled: not a link, not focusable, explained for screen readers.
+  const disabled = page.locator(".project-actions [aria-disabled='true']");
+  await expect(disabled).toHaveCount(6);
+  await expect(disabled.first()).not.toHaveAttribute("href", /.+/);
+  await expect(disabled.first()).toContainText("Not hosted yet");
+});
+
 test("hero image and logo load and have alt text semantics", async ({ page }) => {
   await page.goto("/");
   const portrait = page.locator(".hero-portrait img");
