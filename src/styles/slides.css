@@ -146,7 +146,7 @@ html.js.slides .project-card.is-current {
 }
 html.js.slides .project-details { display: flex; flex-direction: column; }
 html.js.slides .project-details .stack-tags { margin-bottom: 18px; }
-html.js.slides .project-details .btn { align-self: flex-start; margin-top: auto; }
+html.js.slides .project-details .project-actions { margin-top: auto; }
 
 .project-pager {
     display: flex;

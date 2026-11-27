@@ -480,6 +480,11 @@ html[data-theme="dark"] .icon-moon { display: none; }
 }
 .btn:hover { background: var(--hero-fg); color: var(--hero-bg); }
 
+/* Project cards: the repo button and the hosted-version button side by side. */
+.project-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 18px; }
+.project-actions .btn { margin-top: 0; }
+.btn.is-disabled { opacity: 0.45; cursor: not-allowed; }
+
 /* Contact */
 .contact-actions { display: flex; flex-direction: column; align-items: flex-start; gap: 20px; }
 .contact-actions .btn { margin-top: 0; }

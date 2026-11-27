@@ -275,6 +275,7 @@ html[data-design="cinematic"] .stack-tags li {
 html[data-design="cinematic"] .stack-tags { gap: 8px; }
 
 html[data-design="cinematic"] .btn { border-radius: 999px; }
+html[data-design="cinematic"] .btn.is-disabled:hover { background: none; border-color: var(--hero-fg); color: var(--hero-fg); }
 html[data-design="cinematic"] .btn:hover {
     background: var(--color-primary);
     border-color: var(--color-primary);

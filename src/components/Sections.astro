@@ -76,9 +76,21 @@ const icons: Record<SkillId, string> = {
             <ul class="stack-tags">
               {m.stack.map((s) => <li>{s}</li>)}
             </ul>
-            <a class="btn" href={m.href} target="_blank" rel="noopener noreferrer">
-              {c.projects.cta} <span aria-hidden="true">↗</span>
-            </a>
+            <div class="project-actions">
+              <a class="btn" href={m.href} target="_blank" rel="noopener noreferrer">
+                {c.projects.cta} <span aria-hidden="true">↗</span>
+              </a>
+              {m.liveUrl ? (
+                <a class="btn" href={m.liveUrl} target="_blank" rel="noopener noreferrer">
+                  {c.projects.live} <span aria-hidden="true">↗</span>
+                </a>
+              ) : (
+                <span class="btn is-disabled" role="link" aria-disabled="true" title={c.projects.liveSoon}>
+                  {c.projects.live}
+                  <span class="sr-only"> ({c.projects.liveSoon})</span>
+                </span>
+              )}
+            </div>
           </div>
         </article>
       );
