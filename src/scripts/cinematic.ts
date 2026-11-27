@@ -76,7 +76,8 @@ if (!reduceMotion) {
   });
 }
 
-// Project cards: cursor spotlight and a small 3D tilt on the screenshot.
+// Project cards: cursor spotlight, a 3D tilt with a moving glare on the screenshot, and the
+// text block drifting slightly the other way so the card reads as layers.
 if (canHover && !reduceMotion) {
   document.querySelectorAll<HTMLElement>(".project-card").forEach((card) => {
     const mockup = card.querySelector<HTMLElement>(".mockup");
@@ -88,13 +89,20 @@ if (canHover && !reduceMotion) {
         const m = mockup.getBoundingClientRect();
         const px = (e.clientX - m.left) / m.width - 0.5;
         const py = (e.clientY - m.top) / m.height - 0.5;
-        mockup.style.setProperty("--ry", `${(px * 6).toFixed(2)}deg`);
-        mockup.style.setProperty("--rx", `${(-py * 6).toFixed(2)}deg`);
+        mockup.style.setProperty("--ry", `${(px * 10).toFixed(2)}deg`);
+        mockup.style.setProperty("--rx", `${(-py * 10).toFixed(2)}deg`);
+        mockup.style.setProperty("--gx", `${((px + 0.5) * 100).toFixed(1)}%`);
+        mockup.style.setProperty("--gy", `${((py + 0.5) * 100).toFixed(1)}%`);
       }
+      const cx = (e.clientX - r.left) / r.width - 0.5;
+      const cy = (e.clientY - r.top) / r.height - 0.5;
+      card.style.setProperty("--dx", cx.toFixed(3));
+      card.style.setProperty("--dy", cy.toFixed(3));
     });
     card.addEventListener("pointerleave", () => {
-      mockup?.style.setProperty("--rx", "0deg");
-      mockup?.style.setProperty("--ry", "0deg");
+      for (const name of ["--rx", "--ry"]) mockup?.style.setProperty(name, "0deg");
+      card.style.setProperty("--dx", "0");
+      card.style.setProperty("--dy", "0");
     });
   });
 }
