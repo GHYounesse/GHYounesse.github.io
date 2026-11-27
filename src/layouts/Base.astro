@@ -1,6 +1,7 @@
 ---
 import "../styles/global.css";
 import "../styles/cinematic.css";
+import "../styles/slides.css";
 import { SITE } from "../config";
 import type { Content } from "../content/types";
 
@@ -48,6 +49,14 @@ const ogImage = new URL("/og.png", SITE.url).href;
         // The design is dark-first: dark unless the visitor chose otherwise with the toggle.
         root.setAttribute("data-theme", saved || "dark");
         root.classList.add("js");
+        // Desktop with a mouse and motion allowed gets the slideshow layout. Everyone else keeps the scrolling page.
+        // The class is removed again if the animation code fails to load (see ui.ts), so content is never stuck hidden.
+        if (
+          matchMedia("(min-width: 1024px) and (min-height: 640px) and (hover: hover) and (pointer: fine)").matches &&
+          !matchMedia("(prefers-reduced-motion: reduce)").matches
+        ) {
+          root.classList.add("slides");
+        }
       })();
     </script>
   </head>

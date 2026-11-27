@@ -110,5 +110,9 @@ function afterLoadWhenIdle(task: () => void) {
 }
 
 afterLoadWhenIdle(() => {
-  import("./cinematic").catch((error) => console.warn("Cinematic effects failed to load:", error));
+  import("./cinematic").catch((error) => {
+    console.warn("Cinematic effects failed to load:", error);
+    // The slideshow layout hides most sections until its controller runs: fall back to the scrolling page.
+    root.classList.remove("slides");
+  });
 });
